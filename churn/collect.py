@@ -1,8 +1,9 @@
 """Write one CSV row per non-merge commit with Python churn split by category.
 
-Usage: python -m churn.collect REPO_DIR OUT_CSV
+Usage: python -m churn.collect REPO_DIR OUT_CSV [SINCE] [UNTIL]
 """
 import csv
+import os
 import re
 import subprocess
 import sys
@@ -74,12 +75,13 @@ def _finish_file(current, stats, blobs):
         stats[category] += count
 
 
-def iter_commits(repo):
+def iter_commits(repo, since=None, until=None):
     blobs = Blobs(repo)
+    window = [f"--since={since}"] * bool(since) + [f"--until={until}"] * bool(until)
     proc = subprocess.Popen(
         ["git", "-C", repo, "-c", "core.quotepath=off", "log", "--no-merges", "--reverse", "--full-index",
-         "--no-color", "--no-ext-diff", "-M", "-U0", "--diff-algorithm=histogram",
-         "--format=%x00COMMIT%x09%H%x09%aI%x09%cI%x09%ae", "-p", "--", "*.py"],
+         "--no-color", "--no-ext-diff", "-M", "-U0", "--diff-algorithm=histogram", *window,
+         "--format=%x00COMMIT%x09%H%x09%aI%x09%cI%x09%ae", "-p", "HEAD", "--", "*.py"],
         stdout=subprocess.PIPE,
     )
     meta, stats, current, hunk, stale = None, Counter(), None, None, False
@@ -131,13 +133,15 @@ def _row(meta, stats):
     }
 
 
-def main(repo, out_csv):
-    with open(out_csv, "w", newline="", encoding="utf-8") as handle:
+def main(repo, out_csv, since=None, until=None):
+    # Write to a temporary file so an interrupted run never leaves a partial CSV behind.
+    with open(out_csv + ".part", "w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, FIELDS)
         writer.writeheader()
-        for row in iter_commits(repo):
+        for row in iter_commits(repo, since, until):
             writer.writerow(row)
+    os.replace(out_csv + ".part", out_csv)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(*sys.argv[1:])

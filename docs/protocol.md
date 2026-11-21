@@ -32,7 +32,7 @@ Start date = S1, unless S1 is before 1995 or more than 30 days after S3, in whic
 | Id | Source | Notes |
 |----|--------|-------|
 | A1 | First commit adding a Black reference to a configuration or automation file | Config can precede actual use |
-| A2 | Reformat commit: the commit touching the most `.py` files in [A1 − 180 days, A1 + 365 days] | Confirmed when at least 90% of its changed lines classify as formatting |
+| A2 | Reformat commit: in [A1 − 180 days, A1 + 365 days], the commit with the most lines classified as formatting | Confirmed when at least 90% of its changed `.py` lines, and at least 50 lines, classify as formatting |
 | A3 | Release date of the Black version pinned at A1 (pre-commit `rev` or requirement pin) | A1 earlier than A3 means the pin or the date is wrong |
 
 A1 is read from the first-parent history of the default branch, so for changes made on a branch it is the date the merge reached the default branch. A2 can therefore be a few days earlier than A1.
@@ -54,7 +54,13 @@ Adoption date = A2 when it is confirmed, else A1 with a flag. Adoption dates bef
 - no other enforced formatter (YAPF, autopep8, `ruff format`) in the matched window
 - the same activity threshold as adopters
 
-Each control gets a pseudo-adoption date from the adopter it is matched with. Matching uses the number of `.py` commits in the pre-window first, then repository age.
+Each control gets a pseudo-adoption date from the adopter it is matched with. Matching is greedy nearest-neighbour without replacement, adopters taken in order of adoption date. The distance is
+
+|ln(1 + pre-window `.py` commits of control) − ln(1 + same for adopter)| + 0.5 · |ln(age of control) − ln(age of adopter)|
+
+with age measured in days from the start date to the (pseudo-)adoption date. Adopters with no eligible control are kept for within-repository analysis and left out of between-group comparisons.
+
+**Exclusions after review:** repositories that are not software projects (courses, tutorials, books, collections of examples) are removed from both groups. Each exclusion is listed with its reason in `data/exclusions.csv`. When an adopter is excluded, its matched control is dropped with it and the remaining pairs are not re-matched.
 
 ## Measures
 
@@ -77,3 +83,5 @@ For every profiled candidate, whether or not it is in the final sample:
 
 | Date | Change | Reason |
 |------|--------|--------|
+| 2026-11-21 | A2 is the commit with most formatting lines, not most `.py` files | The file-count rule picked feature commits (for example a commit adding a lecture to a course repository) |
+| 2026-11-21 | Non-software repositories excluded after review | Profiling showed course and tutorial repositories among adopters |

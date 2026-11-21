@@ -11,6 +11,7 @@ import json
 import os
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tomllib
@@ -74,6 +75,15 @@ def git(repo, *args, text=True, input=None):
 
 def parse_date(value):
     return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
+
+
+def remove_clone(path):
+    """Delete a clone; on Windows Git marks pack files read-only, which plain rmtree cannot delete."""
+    def make_writable(func, target, _):
+        os.chmod(target, stat.S_IWRITE)
+        func(target)
+    if os.path.isdir(path):
+        shutil.rmtree(path, onexc=make_writable)
 
 
 def clone(full_name, clone_url):
@@ -311,7 +321,7 @@ def main(candidates_csv, out_csv, limit=None):
             handle.flush()
             print(candidate["full_name"], row.get("black_ever", ""), row.get("a1_black_first", ""), row.get("error", ""), file=sys.stderr, flush=True)
             if os.environ.get("KEEP_CLONES") != "1":
-                shutil.rmtree(os.path.join(CLONE_DIR, candidate["full_name"].replace("/", "__")), ignore_errors=True)
+                remove_clone(os.path.join(CLONE_DIR, candidate["full_name"].replace("/", "__")))
 
 
 if __name__ == "__main__":
