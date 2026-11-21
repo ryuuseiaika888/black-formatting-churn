@@ -85,3 +85,4 @@ For every profiled candidate, whether or not it is in the final sample:
 |------|--------|--------|
 | 2026-11-21 | A2 is the commit with most formatting lines, not most `.py` files | The file-count rule picked feature commits (for example a commit adding a lecture to a course repository) |
 | 2026-11-21 | Non-software repositories excluded after review | Profiling showed course and tutorial repositories among adopters |
+| 2026-11-21 | Added after the pre-registered tests, reported as exploratory: formatting share in commits that are not formatting-only; keyword categories of formatting-only commit messages | To interpret the increase in formatting-only commits (H2) |

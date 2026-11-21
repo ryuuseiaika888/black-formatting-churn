@@ -1,0 +1,2088 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hunk labelling</title>
+<style>
+body{font:14px system-ui,sans-serif;max-width:980px;margin:0 auto;padding:16px;background:#fff;color:#222}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid #ddd;padding:8px 0;z-index:1}
+section{border-bottom:1px solid #eee;padding:12px 0}
+h2{font-size:15px;margin:0 0 6px} small{color:#777;font-weight:normal}
+pre{background:#f7f7f7;padding:8px;overflow-x:auto;font:12px/1.45 Consolas,monospace;margin:0 0 8px}
+.add{background:#e6ffec;display:block}.del{background:#ffebe9;display:block}.ctx{color:#888;display:block}
+.choices label{margin-right:14px;cursor:pointer} .choices input[type=text]{width:320px}
+details{margin:6px 0 10px} button{font-size:14px;padding:4px 12px}
+</style></head><body>
+<header><b>Hunk labelling</b> · <span id="count"></span> labelled ·
+<button onclick="download()">Save labels.csv</button>
+<details><summary>Definitions (read first)</summary>
+<p>Judge only the shown hunk on its own (red lines replaced by green lines; grey is unchanged context).</p>
+<ul>
+<li><b>formatting</b>: the code means exactly the same and only its layout changes: whitespace, indentation of continuation lines, line breaks, parentheses that only wrap lines, quote style, trailing commas, blank lines, re-indented docstring lines.</li>
+<li><b>comment</b>: a <code>#</code> comment is added, removed or reworded (and nothing else but layout changes).</li>
+<li><b>logic</b>: anything else: code, string contents, docstring wording, type hints, imports added, removed or reordered. (Dropping a <code>u</code> string prefix counts as formatting.)</li>
+<li><b>cannot tell</b>: the hunk alone is not enough to decide (for example it opens a bracket that a different hunk closes).</li>
+</ul>
+<p>Tick <i>cosmetic</i> for a logic hunk that would not change behaviour in practice (for example import reordering, <code>%</code> to f-string with the same output).</p>
+</details></header>
+<section id="H001"><h2>H001 <small>cinemagoer/cinemagoer · 8f1762f7ef · docs/goodies/download_applydiffs.py:363</small></h2><pre><span class="ctx">              # Apply all the patch files to the list files in tmpListsPath</span>
+<span class="ctx">              isFirstPatchFile = True</span>
+<span class="ctx">              for f in os.listdir(tmpDiffsPath):</span>
+<span class="del">-                 if re.match(&quot;.*\.list&quot;,f):</span>
+<span class="add">+                 if re.match(r&quot;.*\.list&quot;,f):</span>
+<span class="ctx">                      logger.info(&quot;Patching imdb list file %s&quot; % f)</span>
+<span class="ctx">                      try:</span>
+<span class="ctx">                          cmdApplyPatch = applyPatch % (os.path.join(tmpListsPath,f), os.path.join(tmpDiffsPath,f))</span>
+</pre><div class="choices" data-id="H001"></div></section>
+<section id="H002"><h2>H002 <small>SolidCode/SolidPython · b8eda787ca · solid/utils.py:631</small></h2><pre><span class="ctx">          else:</span>
+<span class="ctx">              all_z.append(0)</span>
+<span class="ctx">  </span>
+<span class="del">-     return [[min(all_x), min(all_y), min(all_z)], [max(all_x), max(all_y), max(all_z)]]</span>
+<span class="del">- </span>
+<span class="add">+     return ((min(all_x), min(all_y), min(all_z)), (max(all_x), max(all_y), max(all_z)))</span>
+<span class="ctx">  </span>
+<span class="ctx">  # =======================</span>
+<span class="ctx">  # = Hardware dimensions =</span>
+</pre><div class="choices" data-id="H002"></div></section>
+<section id="H003"><h2>H003 <small>marshmallow-code/marshmallow-sqlalchemy · 870afa7a83 · docs/conf.py:9</small></h2><pre><span class="ctx">  import sys</span>
+<span class="ctx">  </span>
+<span class="ctx">  import alabaster</span>
+<span class="del">- from marshmallow.compat import OrderedDict</span>
+<span class="add">+ try:</span>
+<span class="add">+     from marshmallow.compat import OrderedDict</span>
+<span class="add">+ except ImportError:</span>
+<span class="add">+     from collections import OrderedDict</span>
+<span class="ctx">  sys.path.insert(0, os.path.abspath(&#x27;..&#x27;))</span>
+<span class="ctx">  import marshmallow_sqlalchemy</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H003"></div></section>
+<section id="H004"><h2>H004 <small>andikleen/pmu-tools · 33d5ce791b · utilized.py:38</small></h2><pre><span class="ctx">      if t[2] == &quot;CPU_Utilization&quot;:</span>
+<span class="ctx">          util[t[1]].append(float(t[3]))</span>
+<span class="ctx">  </span>
+<span class="del">- </span>
+<span class="ctx">  final = []</span>
+<span class="ctx">  skipped = []</span>
+<span class="ctx">  for j in sorted(fields.keys()):</span>
+</pre><div class="choices" data-id="H004"></div></section>
+<section id="H005"><h2>H005 <small>ikalchev/HAP-python · c81a5fbfb1 · pyhap/hap_server.py:72</small></h2><pre><span class="ctx">  class HAP_CRYPTO:</span>
+<span class="ctx">      HKDF_KEYLEN = 32  # bytes, length of expanded HKDF keys</span>
+<span class="ctx">      HKDF_HASH = hashes.SHA512()  # Hash function to use in key expansion</span>
+<span class="del">-     TAG_LENGTH = 16 # ChaCha20Poly1305 tag length</span>
+<span class="add">+     TAG_LENGTH = 16  # ChaCha20Poly1305 tag length</span>
+<span class="ctx">      TLS_NONCE_LEN = 12  # bytes, length of TLS encryption nonce</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H005"></div></section>
+<section id="H006"><h2>H006 <small>theupdateframework/python-tuf · cd34793b0a · tests/test_metadata_serialization.py:49</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      @utils.run_sub_tests_with_dataset(invalid_metadata)</span>
+<span class="ctx">      def test_invalid_metadata_serialization(self, test_data: bytes) -&gt; None:</span>
+<span class="del">-         # We expect a DeserializationError reraised from KeyError.</span>
+<span class="add">+         # We expect a DeserializationError reraised from ValueError or KeyError.</span>
+<span class="ctx">          with self.assertRaises(DeserializationError):</span>
+<span class="ctx">              Metadata.from_bytes(test_data)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H006"></div></section>
+<section id="H007"><h2>H007 <small>MalloyDelacroix/DownloaderForReddit · 51b4d59049 · DownloaderForReddit/Logging/Logger.py:30</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      logger.addHandler(stream_handler)</span>
+<span class="ctx">      logger.addHandler(file_handler)</span>
+<span class="del">- </span>
+<span class="del">-     # logger.info(&#x27;Logger created&#x27;)</span>
+</pre><div class="choices" data-id="H007"></div></section>
+<section id="H008"><h2>H008 <small>kivy/python-for-android · 22b7dfee1d · pythonforandroid/bootstrap.py:297</small></h2><pre><span class="ctx">          tgt_dir = join(dest_dir, arch.arch)</span>
+<span class="ctx">          ensure_dir(tgt_dir)</span>
+<span class="ctx">          for src_dir in src_dirs:</span>
+<span class="del">-             for lib in glob.glob(join(src_dir, wildcard)):</span>
+<span class="del">-                 shprint(sh.cp, &#x27;-a&#x27;, lib, tgt_dir)</span>
+<span class="add">+             libs = glob.glob(join(src_dir, wildcard))</span>
+<span class="add">+             shprint(sh.cp, &#x27;-a&#x27;, *libs, tgt_dir)</span>
+<span class="ctx">  </span>
+<span class="ctx">      def distribute_javaclasses(self, javaclass_dir, dest_dir=&quot;src&quot;):</span>
+<span class="ctx">          &#x27;&#x27;&#x27;Copy existing javaclasses from build dir to current dist dir.&#x27;&#x27;&#x27;</span>
+</pre><div class="choices" data-id="H008"></div></section>
+<section id="H009"><h2>H009 <small>heuer/segno · c3349df9a4 · segno/writers.py:212</small></h2><pre><span class="ctx">      paths = {}</span>
+<span class="ctx">      scale_info = &#x27; transform=&quot;scale({})&quot;&#x27;.format(scale) if scale != 1 else &#x27;&#x27;</span>
+<span class="ctx">      p = &#x27;&lt;path{}{}&#x27;.format(scale_info if not need_svg_group else &#x27;&#x27;,</span>
+<span class="del">-                            &#x27;&#x27; if not lineclass else &#x27; class={}&#x27;.format(quoteattr(lineclass)))</span>
+<span class="add">+                            &#x27;&#x27; if not lineclass else f&#x27; class={quoteattr(lineclass)}&#x27;)</span>
+<span class="ctx">      for color, coord in coordinates.items():</span>
+<span class="ctx">          path = p</span>
+<span class="ctx">          clr = svg_color(color)</span>
+</pre><div class="choices" data-id="H009"></div></section>
+<section id="H010"><h2>H010 <small>Toblerity/Fiona · dd57cbd597 · tests/test_listing.py:61</small></h2><pre><span class="ctx">  def test_invalid_path_ioerror():</span>
+<span class="ctx">      with pytest.raises(DriverError):</span>
+<span class="ctx">          fiona.listlayers(&quot;foobar&quot;)</span>
+<span class="add">+ </span>
+<span class="add">+ </span>
+<span class="add">+ def test_path_object(path_coutwildrnp_shp):</span>
+<span class="add">+     path_obj = Path(path_coutwildrnp_shp)</span>
+<span class="add">+     assert fiona.listlayers(path_obj) == [&#x27;coutwildrnp&#x27;]</span>
+<span class="add">+ </span>
+<span class="add">+ </span>
+<span class="add">+ def test_zip_path_arch(path_coutwildrnp_zip):</span>
+<span class="add">+     vfs = Path(&#x27;zip://{}&#x27;.format(path_coutwildrnp_zip))</span>
+<span class="add">+     assert fiona.listlayers(&#x27;/coutwildrnp.shp&#x27;, vfs=vfs) == [&#x27;coutwildrnp&#x27;]</span>
+</pre><div class="choices" data-id="H010"></div></section>
+<section id="H011"><h2>H011 <small>andikleen/pmu-tools · a452af719f · bdx_server_ratios.py:163</small></h2><pre><span class="ctx">  def HighIPC(self, EV, level):</span>
+<span class="ctx">      return IPC(self, EV, level) / Pipeline_Width</span>
+<span class="ctx">  </span>
+<span class="del">- # Instructions Per Cycle (per logical thread)</span>
+<span class="add">+ # Instructions Per Cycle (per Logical Processor)</span>
+<span class="ctx">  def IPC(self, EV, level):</span>
+<span class="ctx">      return EV(&quot;INST_RETIRED.ANY&quot;, level) / CLKS(self, EV, level)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H011"></div></section>
+<section id="H012"><h2>H012 <small>secdev/scapy · 49aeec8e4e · scapy/dadict.py:58</small></h2><pre><span class="ctx">                  print(&quot;%10s = %r&quot; % (k, getattr(self, k)))</span>
+<span class="ctx">  </span>
+<span class="ctx">      def __repr__(self):</span>
+<span class="del">-         return &quot;&lt;%s/ %s&gt;&quot; % (self._name, &quot; &quot;.join(x for x in self.__dict__ if x and x[0] != &quot;_&quot;))  # noqa: E501</span>
+<span class="add">+         return &quot;&lt;%s - %s elements&gt;&quot; % (self._name, len(self.__dict__))</span>
+<span class="ctx">  </span>
+<span class="ctx">      def _branch(self, br, uniq=0):</span>
+<span class="ctx">          if uniq and br._name in self:</span>
+</pre><div class="choices" data-id="H012"></div></section>
+<section id="H013"><h2>H013 <small>gcovr/gcovr · 54bd73a4e0 · gcovr/timestamps.py:14</small></h2><pre><span class="ctx">  # This software is distributed under the BSD License.</span>
+<span class="ctx">  # Under the terms of Contract DE-AC04-94AL85000 with Sandia Corporation,</span>
+<span class="ctx">  # the U.S. Government retains certain rights in this software.</span>
+<span class="add">+ #</span>
+<span class="add">+ # This software is distributed under the 3-clause BSD License.</span>
+<span class="ctx">  # For more information, see the README.rst file.</span>
+<span class="ctx">  #</span>
+<span class="ctx">  # ****************************************************************************</span>
+</pre><div class="choices" data-id="H013"></div></section>
+<section id="H014"><h2>H014 <small>Alir3z4/html2text · 0f5968fd6e · html2text/__init__.py:210</small></h2><pre><span class="ctx">          self.a list. If the set of attributes is not found, returns None</span>
+<span class="ctx">          :rtype: int</span>
+<span class="ctx">          &quot;&quot;&quot;</span>
+<span class="del">-         if &#x27;href&#x27; not in attrs:</span>
+<span class="add">+         if &quot;href&quot; not in attrs:</span>
+<span class="ctx">              return None</span>
+<span class="ctx">          i = -1</span>
+<span class="ctx">          for a in self.a:</span>
+</pre><div class="choices" data-id="H014"></div></section>
+<section id="H015"><h2>H015 <small>opencobra/cobrapy · 5daee7230a · src/cobra/test/test_flux_analysis/test_variability.py:63</small></h2><pre><span class="ctx">      &quot;&quot;&quot;Test loopless FVA using pFBA.&quot;&quot;&quot;</span>
+<span class="ctx">      loop_reactions = [model.reactions.get_by_id(rid) for rid in (&quot;FRD7&quot;, &quot;SUCDi&quot;)]</span>
+<span class="ctx">      fva_loopless = flux_variability_analysis(</span>
+<span class="del">-         model, pfba_factor=1.1, reaction_list=loop_reactions, loopless=True, processes=1</span>
+<span class="add">+         model,</span>
+<span class="add">+         pfba_factor=1.1,</span>
+<span class="add">+         reaction_list=loop_reactions,</span>
+<span class="add">+         loopless=True,</span>
+<span class="add">+         processes=1,</span>
+<span class="ctx">      )</span>
+<span class="ctx">      assert np.allclose(fva_loopless[&quot;maximum&quot;], fva_loopless[&quot;minimum&quot;])</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H015"></div></section>
+<section id="H016"><h2>H016 <small>flask-dashboard/Flask-MonitoringDashboard · 63f3b8ce0c · flask_monitoringdashboard/views/__init__.py:24</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  @blueprint.route(&#x27;/&#x27;, defaults={&#x27;path&#x27;: &#x27;&#x27;})</span>
+<span class="del">- @blueprint.route(&#x27;/&lt;path:path&gt;&#x27;)</span>
+<span class="add">+ @blueprint.route(&#x27;/&lt;path:path&gt;&#x27;)  # Catch-All URL: http://flask.pocoo.org/snippets/57/</span>
+<span class="ctx">  @secure</span>
+<span class="ctx">  def index(path):</span>
+<span class="ctx">      return render_template(&#x27;angular.html&#x27;)</span>
+</pre><div class="choices" data-id="H016"></div></section>
+<section id="H017"><h2>H017 <small>cinemagoer/cinemagoer · 996fde1169 · tests/test_http_movie_combined.py:278</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def test_movie_rating_if_none_should_be_excluded(ia):</span>
+<span class="del">-     movie = ia.get_movie(&#x27;1863157&#x27;, info=[&#x27;main&#x27;])      # Ates Parcasi</span>
+<span class="add">+     movie = ia.get_movie(&#x27;3629794&#x27;, info=[&#x27;main&#x27;])      # Aslan</span>
+<span class="ctx">      assert &#x27;rating&#x27; not in movie</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H017"></div></section>
+<section id="H018"><h2>H018 <small>DedSecInside/TorBot · 13a2c4df0c · src/modules/utils.py:39</small></h2><pre><span class="ctx">          else:</span>
+<span class="ctx">              result = process(data)</span>
+<span class="ctx">  </span>
+<span class="del">-         if result:</span>
+<span class="del">-             data_stack.append(result)</span>
+<span class="del">-         data_queue.task_done()</span>
+<span class="add">+             if result:</span>
+<span class="add">+                 data_stack.append(result)</span>
+<span class="add">+             data_queue.task_done()</span>
+<span class="add">+         except Exception as e:</span>
+<span class="add">+             pass</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def multi_thread(data, data_function, *args):</span>
+</pre><div class="choices" data-id="H018"></div></section>
+<section id="H019"><h2>H019 <small>jupyter/docker-stacks · 3f6d683f76 · all-spark-notebook/test/test_spark_notebooks.py:40</small></h2><pre><span class="ctx">          tty=True,</span>
+<span class="ctx">          command=[&quot;start.sh&quot;, &quot;bash&quot;, &quot;-c&quot;, command],</span>
+<span class="ctx">      )</span>
+<span class="del">-     # Spark warning</span>
+<span class="ctx">      warnings = TrackedContainer.get_warnings(logs)</span>
+<span class="ctx">      assert len(warnings) == 1</span>
+<span class="ctx">      assert &quot;An illegal reflective access operation has occurred&quot; in warnings[0]</span>
+</pre><div class="choices" data-id="H019"></div></section>
+<section id="H020"><h2>H020 <small>PyDMD/PyDMD · 196d14fb81 · pydmd/bopdmd.py:597</small></h2><pre><span class="ctx">              # Update termination status and terminate if converged or stalled.</span>
+<span class="ctx">              converged = error &lt; tol</span>
+<span class="ctx">              error_reduction = all_error[itr - 1] - all_error[itr]</span>
+<span class="del">-             stalled = ((itr &gt; 0) and</span>
+<span class="del">-                        (error_reduction &lt; eps_stall * all_error[itr - 1]))</span>
+<span class="add">+             stalled = (itr &gt; 0) and (</span>
+<span class="add">+                 error_reduction &lt; eps_stall * all_error[itr - 1]</span>
+<span class="add">+             )</span>
+<span class="ctx">  </span>
+<span class="ctx">              if converged:</span>
+<span class="ctx">                  if verbose:</span>
+</pre><div class="choices" data-id="H020"></div></section>
+<section id="H021"><h2>H021 <small>SolidCode/SolidPython · 9bd8df5c64 · solid/splines.py:21</small></h2><pre><span class="ctx">  # =======================</span>
+<span class="ctx">  # = CATMULL-ROM SPLINES =</span>
+<span class="ctx">  # =======================</span>
+<span class="del">- def catmull_rom_polygon(points: Sequence[Point23], </span>
+<span class="add">+ def catmull_rom_polygon(points: Sequence[Point23List], </span>
+<span class="ctx">                          subdivisions: int = DEFAULT_SUBDIVISIONS, </span>
+<span class="ctx">                          extrude_height: float = DEFAULT_EXTRUDE_HEIGHT, </span>
+<span class="ctx">                          show_controls: bool =False,</span>
+</pre><div class="choices" data-id="H021"></div></section>
+<section id="H022"><h2>H022 <small>FPGAwars/apio · 5d7fcab787 · apio/managers/installer.py:269</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      def _get_valid_version(self, rel_name, organization, tag_name):</span>
+<span class="ctx">  </span>
+<span class="del">-         # Download latest releases list</span>
+<span class="del">-         releases = api_request(&quot;{}/releases&quot;.format(rel_name), organization)</span>
+<span class="add">+     def _get_valid_version(self, rel_name, organization, tag_name):</span>
+<span class="add">+         &quot;&quot;&quot;Get the latest valid version. It can be the latest vesion available</span>
+<span class="add">+            in github or a specific version&quot;&quot;&quot;</span>
+<span class="add">+ </span>
+<span class="add">+         # Get the data from the Github api</span>
+<span class="add">+         # Ex of the object obtained in this URL:</span>
+<span class="add">+         # https://api.github.com/repos/FPGAwars/tools-oss-cad-suite/releases</span>
+<span class="add">+         releases = api_request(f&quot;{rel_name}/releases&quot;, organization)</span>
+<span class="ctx">  </span>
+<span class="ctx">          if self.version:</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H022"></div></section>
+<section id="H023"><h2>H023 <small>pantsbuild/pants · 0bcc841c58 · src/python/pants/engine/process.py:516</small></h2><pre><span class="ctx">          bash = await Get(BashBinary, BashBinaryRequest())</span>
+<span class="ctx">          shebang = f&quot;#!{bash.path}&quot;</span>
+<span class="ctx">  </span>
+<span class="del">-     # Note: the backslash after the &quot;&quot;&quot; marker ensures that the shebang is at the start of the</span>
+<span class="del">-     # script file. Many OSs will not see the shebang if there is intervening whitespace.</span>
+<span class="add">+     # Some subtle notes with this script:</span>
+<span class="add">+     #</span>
+<span class="add">+     #  - The backslash after the `&quot;&quot;&quot;` ensures that the shebang is at the start of the script file.</span>
+<span class="add">+     #       Many OSs will not see the shebang if there is intervening whitespace.</span>
+<span class="add">+     #  - We run the script with `ProcessResult` instead of `FallibleProcessResult` so that we</span>
+<span class="add">+     #      can catch bugs in the script itself, given an earlier silent failure.</span>
+<span class="add">+     #  - We do not use `set -e` like normal because it causes the line</span>
+<span class="add">+     #      `command which -a &lt;bin&gt; || true` to fail the script when using Bash 3, which macOS</span>
+<span class="add">+     #      uses by default.</span>
+<span class="add">+     #  - We set `ProcessCacheScope.PER_RESTART_SUCCESSFUL` to force re-run since any binary found</span>
+<span class="add">+     #      on the host system today could be gone tomorrow. Ideally we&#x27;d only do this for local</span>
+<span class="add">+     #      processes since all known remoting configurations include a static container image as</span>
+<span class="add">+     #      part of their cache key which automatically avoids this problem. See #10769 for a</span>
+<span class="add">+     #      solution that is less of a tradeoff.</span>
+<span class="ctx">      script_path = &quot;./find_binary.sh&quot;</span>
+<span class="ctx">      script_content = dedent(</span>
+<span class="ctx">          f&quot;&quot;&quot;\</span>
+</pre><div class="choices" data-id="H023"></div></section>
+<section id="H024"><h2>H024 <small>celery/django-celery-results · 2440f3da88 · t/unit/backends/test_database.py:743</small></h2><pre><span class="ctx">          request.chord.delay.assert_called_once()</span>
+<span class="ctx">  </span>
+<span class="ctx">      def test_on_chord_part_return_counter_not_found(self):</span>
+<span class="del">-         &quot;&quot;&quot;Test if the chord does not raise an error if the ChordCounter is not found</span>
+<span class="add">+         &quot;&quot;&quot;Test if the chord does not raise an error if the ChordCounter is</span>
+<span class="add">+         not found</span>
+<span class="ctx">  </span>
+<span class="ctx">          Basically this covers the case where a chord was created with a version</span>
+<span class="ctx">          &lt;2.0.0 and the update was done before the chord was finished</span>
+</pre><div class="choices" data-id="H024"></div></section>
+<section id="H025"><h2>H025 <small>MalloyDelacroix/DownloaderForReddit · 0c15dbc21e · DownloaderForReddit/GUI/FailedDownloadsDialog.py:171</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      def export_list_to_xml(self):</span>
+<span class="ctx">          file_path = self.get_file_path(&#x27;failed_downloads.xml&#x27;, &#x27;Xml Files (*xml)&#x27;)</span>
+<span class="del">-         XMLExporter.export_xml(self.table_model.data_list, file_path)</span>
+<span class="add">+         XMLExporter.export_posts_to_xml(self.table_model.data_list, file_path)</span>
+<span class="ctx">  </span>
+<span class="ctx">      def get_file_path(self, suggested_name, extension):</span>
+<span class="ctx">          file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, &#x27;Select Save Path&#x27;,</span>
+</pre><div class="choices" data-id="H025"></div></section>
+<section id="H026"><h2>H026 <small>andikleen/pmu-tools · 13a061ab17 · tl_uval.py:129</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      @ensure_uval</span>
+<span class="ctx">      def __mul__(self, other):</span>
+<span class="del">-         return self._calc(operator.mul, self, other)</span>
+<span class="add">+         return UVal._calc(operator.mul, self, other)</span>
+<span class="ctx">  </span>
+<span class="ctx">      @ensure_uval</span>
+<span class="ctx">      def __div__(self, other):</span>
+</pre><div class="choices" data-id="H026"></div></section>
+<section id="H027"><h2>H027 <small>SolidCode/SolidPython · 7de157e093 · solid/mypy/mypy_test.py:8</small></h2><pre><span class="ctx">      a = cube()</span>
+<span class="ctx">      scad_render_to_file(a)</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  if __name__ == &#x27;__main__&#x27;:</span>
+<span class="ctx">      main()</span>
+</pre><div class="choices" data-id="H027"></div></section>
+<section id="H028"><h2>H028 <small>RLBot/RLBot · eb62dc0de3 · src/main/python/rlbot/utils/virtual_environment_management.py:30</small></h2><pre><span class="ctx">          sys.stderr.write(f&#x27;Installing {requirements}...\n&#x27;)</span>
+<span class="ctx">          sys.stderr.flush()</span>
+<span class="ctx">  </span>
+<span class="add">+         # Make sure pip is installed</span>
+<span class="ctx">          args = [context.env_exe, &#x27;-m&#x27;, &#x27;ensurepip&#x27;]</span>
+<span class="ctx">          finished_process = self.run_and_dump(args, timeout=120)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H028"></div></section>
+<section id="H029"><h2>H029 <small>FPGAwars/apio · d44a842664 · apio/managers/scons.py:29</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  class SCons:</span>
+<span class="del">-     &quot;&quot;&quot;DOC: TODO&quot;&quot;&quot;</span>
+<span class="add">+     &quot;&quot;&quot;Class for managing the scons tools&quot;&quot;&quot;</span>
+<span class="ctx">  </span>
+<span class="ctx">      def __init__(self, project_dir=&quot;&quot;):</span>
+<span class="ctx">          self.profile = Profile()</span>
+</pre><div class="choices" data-id="H029"></div></section>
+<section id="H030"><h2>H030 <small>PyDMD/PyDMD · 6a8a83707f · pydmd/costs.py:453</small></h2><pre><span class="ctx">          :type data: numpy.ndarray</span>
+<span class="ctx">          :param time: time series labeling the 1D snapshots</span>
+<span class="ctx">          :type time: numpy.ndarray</span>
+<span class="del">-         :param window_length: decomposition window length</span>
+<span class="add">+         :param window_length: decomposition window length in number of time</span>
+<span class="add">+             steps.</span>
+<span class="ctx">          :type window_length: int</span>
+<span class="ctx">          :param step_size: how far to slide each window from the previous window.</span>
+<span class="ctx">          :type step_size: int</span>
+</pre><div class="choices" data-id="H030"></div></section>
+<section id="H031"><h2>H031 <small>Toblerity/Fiona · 2bc8cd047f · tests/test_vfs.py:161</small></h2><pre><span class="ctx">          self.assertEqual(</span>
+<span class="ctx">              self.c.path,</span>
+<span class="ctx">              &#x27;/vsitar/{path}/testing/coutwildrnp.shp&#x27;.format(</span>
+<span class="del">-                 path=self.path))    </span>
+<span class="add">+                 path=self.path))</span>
+<span class="ctx">  </span>
+<span class="ctx">  @pytest.mark.network</span>
+<span class="ctx">  def test_open_http():</span>
+</pre><div class="choices" data-id="H031"></div></section>
+<section id="H032"><h2>H032 <small>marshmallow-code/marshmallow-sqlalchemy · 78859eff46 · tests/test_marshmallow_sqlalchemy.py:1006</small></h2><pre><span class="ctx">          assert type(load_data) == models.Teacher</span>
+<span class="ctx">          assert load_data.current_school is None</span>
+<span class="ctx">  </span>
+<span class="del">-     def test_a_teacher_who_is_not_a_substitute(self, models, schemas, teacher,</span>
+<span class="del">-                                                session):</span>
+<span class="add">+     def test_a_teacher_who_is_not_a_substitute(</span>
+<span class="add">+         self, models, schemas, teacher,</span>
+<span class="add">+         session,</span>
+<span class="add">+     ):</span>
+<span class="ctx">          session.commit()</span>
+<span class="ctx">          schema = schemas.TeacherSchema()</span>
+<span class="ctx">          data = unpack(schema.dump(teacher))</span>
+</pre><div class="choices" data-id="H032"></div></section>
+<section id="H033"><h2>H033 <small>opencobra/cobrapy · a5ed9bdf3b · src/cobra/flux_analysis/geometric.py:18</small></h2><pre><span class="ctx">  LOGGER = logging.getLogger(__name__)</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- def geometric_fba(model, epsilon=1e-06, max_tries=200, processes=None):</span>
+<span class="del">-     &quot;&quot;&quot;</span>
+<span class="del">-     Perform geometric FBA to obtain a unique, centered flux distribution.</span>
+<span class="add">+ if TYPE_CHECKING:</span>
+<span class="add">+     from cobra import Model, Solution</span>
+<span class="ctx">  </span>
+<span class="ctx">      Geometric FBA [1]_ formulates the problem as a polyhedron and</span>
+<span class="ctx">      then solves it by bounding the convex hull of the polyhedron.</span>
+</pre><div class="choices" data-id="H033"></div></section>
+<section id="H034"><h2>H034 <small>kivy/python-for-android · 6fa6dde303 · pythonforandroid/recipes/tflite-runtime/__init__.py:57</small></h2><pre><span class="ctx">          pybind11_include_dir = pybind11_recipe.get_include_dir(arch)</span>
+<span class="ctx">          numpy_include_dir = join(self.ctx.get_site_packages_dir(arch),</span>
+<span class="ctx">                                   &#x27;numpy&#x27;, &#x27;core&#x27;, &#x27;include&#x27;)</span>
+<span class="del">-         includes = &#x27; -I&#x27; + python_include_dir +\</span>
+<span class="del">-             &#x27; -I&#x27; + numpy_include_dir +\</span>
+<span class="del">-             &#x27; -I&#x27; + pybind11_include_dir</span>
+<span class="add">+         includes = &#x27; -I&#x27; + python_include_dir + \</span>
+<span class="add">+                    &#x27; -I&#x27; + numpy_include_dir + \</span>
+<span class="add">+                    &#x27; -I&#x27; + pybind11_include_dir</span>
+<span class="ctx">  </span>
+<span class="ctx">          # Scripts</span>
+<span class="ctx">          build_script = join(script_dir, &#x27;build_pip_package_with_cmake.sh&#x27;)</span>
+</pre><div class="choices" data-id="H034"></div></section>
+<section id="H035"><h2>H035 <small>FPGAwars/apio · d44a842664 · apio/managers/scons.py:104</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">          var, board, arch = process_arguments(args, self.resources)</span>
+<span class="ctx">          return self.run(</span>
+<span class="del">-             &quot;time&quot;, var, board, arch, packages=[&quot;scons&quot;, &quot;yosys&quot;, arch]</span>
+<span class="add">+             &quot;time&quot;, var, board, arch, packages=[&quot;scons&quot;, &quot;oss-cad-suite&quot;, arch]</span>
+<span class="ctx">          )</span>
+<span class="ctx">  </span>
+<span class="ctx">      @util.command</span>
+</pre><div class="choices" data-id="H035"></div></section>
+<section id="H036"><h2>H036 <small>openatx/uiautomator2 · 4b849e5aed · uiautomator2/xpath.py:163</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      @property</span>
+<span class="ctx">      def logger(self):</span>
+<span class="del">-         expect_level = logging.DEBUG if self._d.settings[&#x27;xpath_debug&#x27;] else logging.INFO # yapf: disable</span>
+<span class="add">+         expect_level = (</span>
+<span class="add">+             logging.DEBUG if self._d.settings[&quot;xpath_debug&quot;] else logging.INFO</span>
+<span class="add">+         )  # yapf: disable</span>
+<span class="ctx">          if expect_level != self._logger.level:</span>
+<span class="ctx">              self._logger.setLevel(expect_level)</span>
+<span class="ctx">          return self._logger</span>
+</pre><div class="choices" data-id="H036"></div></section>
+<section id="H037"><h2>H037 <small>ikalchev/HAP-python · c81a5fbfb1 · pyhap/hap_server.py:91</small></h2><pre><span class="ctx">      )</span>
+<span class="ctx">      return hkdf.derive(key)</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  class UnprivilegedRequestException(Exception):</span>
+<span class="ctx">      pass</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H037"></div></section>
+<section id="H038"><h2>H038 <small>FPGAwars/apio · 2c41cb2995 · apio/__init__.py:12</small></h2><pre><span class="ctx">  # - Information for the Distribution package</span>
+<span class="ctx">  # --------------------------------------------</span>
+<span class="ctx">  </span>
+<span class="del">- VERSION = (0, 6, 2)</span>
+<span class="add">+ VERSION = (0, 6, 3)</span>
+<span class="ctx">  __version__ = &quot;.&quot;.join([str(s) for s in VERSION])</span>
+<span class="ctx">  </span>
+<span class="ctx">  __title__ = &quot;apio&quot;</span>
+</pre><div class="choices" data-id="H038"></div></section>
+<section id="H039"><h2>H039 <small>DedSecInside/TorBot · 85116d2419 · modules/pagereader.py:27</small></h2><pre><span class="ctx">                  continue</span>
+<span class="ctx">  </span>
+<span class="ctx">          if attempts_left == 2:</span>
+<span class="del">-             https_url = &#x27;https://&#x27;+site</span>
+<span class="add">+             https_url = &#x27;https://&#x27; + site</span>
+<span class="ctx">              print(next(connection_msg(https_url)))</span>
+<span class="ctx">              response = get_url_status(https_url, headers)</span>
+<span class="ctx">              if response != 0:</span>
+</pre><div class="choices" data-id="H039"></div></section>
+<section id="H040"><h2>H040 <small>MalloyDelacroix/DownloaderForReddit · 0c15dbc21e · DownloaderForReddit/Utils/Exporters/TextExporter.py:32</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def format_post_output(post):</span>
+<span class="add">+     &quot;&quot;&quot;</span>
+<span class="add">+     Formats the attributes of the supplied post into a format that is easy to read from a text file.</span>
+<span class="add">+     :param post: The post that is to be formatted.</span>
+<span class="add">+     :return: The supplied posts attributes in a readable formatted string.</span>
+<span class="add">+     &quot;&quot;&quot;</span>
+<span class="ctx">      return &#x27;Author: %s\nSubreddit: %s\nTitle: %s\nCreated: %s\nUrl: %s\nStatus: %s\nSave Status: %s&#x27; % \</span>
+<span class="ctx">              (post.author, post.subreddit, post.title, post.date_posted, post.url, post.status, post.save_status)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H040"></div></section>
+<section id="H041"><h2>H041 <small>cinemagoer/cinemagoer · 996fde1169 · tests/test_http_movie_combined.py:288</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def test_movie_votes_if_none_should_be_excluded(ia):</span>
+<span class="del">-     movie = ia.get_movie(&#x27;1863157&#x27;, info=[&#x27;main&#x27;])      # Ates Parcasi</span>
+<span class="add">+     movie = ia.get_movie(&#x27;3629794&#x27;, info=[&#x27;main&#x27;])      # Aslan</span>
+<span class="ctx">      assert &#x27;votes&#x27; not in movie</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H041"></div></section>
+<section id="H042"><h2>H042 <small>agronholm/typeguard · df3ca82a81 · src/typeguard/__init__.py:46</small></h2><pre><span class="ctx">      check_argument_types,</span>
+<span class="ctx">      check_return_type,</span>
+<span class="ctx">      check_type,</span>
+<span class="del">-     check_yield_type,</span>
+<span class="ctx">      suppress_type_checks,</span>
+<span class="ctx">      warn_on_error,</span>
+<span class="ctx">  )</span>
+</pre><div class="choices" data-id="H042"></div></section>
+<section id="H043"><h2>H043 <small>theupdateframework/python-tuf · 61e8f40346 · tests/test_trusted_metadata_set.py:188</small></h2><pre><span class="ctx">              # metadata is not json</span>
+<span class="ctx">              with self.assertRaises(exceptions.RepositoryError):</span>
+<span class="ctx">                  update_func(b&quot;&quot;)</span>
+<span class="add">+ </span>
+<span class="ctx">              # metadata is invalid</span>
+<span class="ctx">              md.signed.version += 1</span>
+<span class="ctx">              with self.assertRaises(exceptions.RepositoryError):</span>
+</pre><div class="choices" data-id="H043"></div></section>
+<section id="H044"><h2>H044 <small>secdev/scapy · e2e0fdf4a0 · scapy/arch/linux.py:446</small></h2><pre><span class="ctx">              log_runtime.info(</span>
+<span class="ctx">                  &quot;The &#x27;monitor&#x27; argument has no effect on native linux sockets.&quot;</span>
+<span class="ctx">              )</span>
+<span class="del">-         self.ins = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.htons(type))  # noqa: E501</span>
+<span class="add">+         self.ins = socket.socket(</span>
+<span class="add">+             socket.AF_PACKET, socket.SOCK_RAW, socket.htons(type))</span>
+<span class="ctx">          if not nofilter:</span>
+<span class="ctx">              if conf.except_filter:</span>
+<span class="ctx">                  if filter:</span>
+</pre><div class="choices" data-id="H044"></div></section>
+<section id="H045"><h2>H045 <small>Alir3z4/html2text · 2a81874e47 · html2text/__init__.py:817</small></h2><pre><span class="ctx">          nest_count = 0</span>
+<span class="ctx">          if &#x27;margin-left&#x27; in style:</span>
+<span class="ctx">              nest_count = int(style[&#x27;margin-left&#x27;][:-2]) \</span>
+<span class="del">-                          // self.google_list_indent</span>
+<span class="add">+                 // self.google_list_indent</span>
+<span class="ctx">  </span>
+<span class="ctx">          return nest_count</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H045"></div></section>
+<section id="H046"><h2>H046 <small>MalloyDelacroix/DownloaderForReddit · 5e66d6f46f · DownloaderForReddit/GUI_Resources/RedditObjectSettingsDialog_auto.py:204</small></h2><pre><span class="ctx">          self.download_gifs_checkbox = QtWidgets.QCheckBox(self.layoutWidget_2)</span>
+<span class="ctx">          self.download_gifs_checkbox.setText(&quot;&quot;)</span>
+<span class="ctx">          self.download_gifs_checkbox.setObjectName(&quot;download_gifs_checkbox&quot;)</span>
+<span class="del">-         self.post_download_form.setWidget(11, QtWidgets.QFormLayout.FieldRole, self.download_gifs_checkbox)</span>
+<span class="add">+         self.post_download_form.setWidget(13, QtWidgets.QFormLayout.FieldRole, self.download_gifs_checkbox)</span>
+<span class="ctx">          self.label_28 = QtWidgets.QLabel(self.layoutWidget_2)</span>
+<span class="ctx">          self.label_28.setObjectName(&quot;label_28&quot;)</span>
+<span class="ctx">          self.post_download_form.setWidget(12, QtWidgets.QFormLayout.LabelRole, self.label_28)</span>
+</pre><div class="choices" data-id="H046"></div></section>
+<section id="H047"><h2>H047 <small>netbox-community/netbox-docker · 58050e5287 · docker/ldap_config.docker.py:1</small></h2><pre><span class="del">- from os.path import abspath, isfile</span>
+<span class="del">- from os import scandir</span>
+<span class="del">- import importlib.util</span>
+<span class="del">- import sys</span>
+<span class="add">+ from .configuration import read_configurations</span>
+<span class="ctx">  </span>
+<span class="ctx">  _CONFIG_DIR = &#x27;/etc/netbox/config/ldap/&#x27;</span>
+<span class="ctx">  _MAIN_CONFIG = &#x27;ldap_config&#x27;</span>
+</pre><div class="choices" data-id="H047"></div></section>
+<section id="H048"><h2>H048 <small>gcovr/gcovr · 59248ef69c · gcovr/utils.py:216</small></h2><pre><span class="ctx">      )</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- def calculate_coverage(covered, total, nan_value=0.0):</span>
+<span class="del">-     coverage = nan_value</span>
+<span class="del">-     if total != 0:</span>
+<span class="del">-         coverage = round(100.0 * covered / total, 1)</span>
+<span class="del">-         # If we get 100.0% and not all branches are covered use 99.9%</span>
+<span class="del">-         if (coverage == 100.0) and (covered != total):</span>
+<span class="del">-             coverage = 99.9</span>
+<span class="del">- </span>
+<span class="del">-     return coverage</span>
+<span class="del">- </span>
+<span class="del">- </span>
+<span class="ctx">  class FilterOption:</span>
+<span class="ctx">      NonEmpty: Type[NonEmptyFilterOption]</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H048"></div></section>
+<section id="H049"><h2>H049 <small>deschler/django-modeltranslation · ab79ec8512 · modeltranslation/management/commands/sync_translation_fields.py:130</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      def get_missing_languages(self, field_name, db_table):</span>
+<span class="ctx">          &quot;&quot;&quot;</span>
+<span class="del">-         Gets only missings fields.</span>
+<span class="add">+         Gets only missing fields.</span>
+<span class="ctx">          &quot;&quot;&quot;</span>
+<span class="ctx">          db_table_fields = self.get_table_fields(db_table)</span>
+<span class="ctx">          for lang_code in AVAILABLE_LANGUAGES:</span>
+</pre><div class="choices" data-id="H049"></div></section>
+<section id="H050"><h2>H050 <small>Alir3z4/html2text · 10171cfdbc · html2text/__init__.py:124</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">          config.UNIFIABLE[&quot;nbsp&quot;] = &quot;&amp;nbsp_place_holder;&quot;</span>
+<span class="ctx">  </span>
+<span class="del">-     def feed(self, data):</span>
+<span class="add">+     def feed(self, data: str) -&gt; None:</span>
+<span class="ctx">          data = data.replace(&quot;&lt;/&#x27; + &#x27;script&gt;&quot;, &quot;&lt;/ignore&gt;&quot;)</span>
+<span class="ctx">          super().feed(data)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H050"></div></section>
+<section id="H051"><h2>H051 <small>openatx/uiautomator2 · 5c285cf038 · tests/test_simple.py:146</small></h2><pre><span class="ctx">              def _inner():</span>
+<span class="ctx">                  return k</span>
+<span class="ctx">  </span>
+<span class="del">-             return _inner</span>
+<span class="add">+ @pytest.mark.skip(&quot;TODO:: not fixed&quot;)</span>
+<span class="add">+ def test_select_iter(d):</span>
+<span class="add">+     d(text=&#x27;OS&#x27;).click()</span>
+<span class="add">+     texts = d(resourceId=&#x27;android:id/list&#x27;).child(</span>
+<span class="add">+         className=&#x27;android.widget.TextView&#x27;)</span>
+<span class="add">+     assert texts.count == 4</span>
+<span class="add">+     words = []</span>
+<span class="add">+     for item in texts:</span>
+<span class="add">+         words.append(item.get_text())</span>
+<span class="add">+     assert words == [&#x27;Morse Code&#x27;, &#x27;Rotation Vector&#x27;, &#x27;Sensors&#x27;, &#x27;SMS Messaging&#x27;]</span>
+<span class="ctx">  </span>
+<span class="ctx">          u2.plugin_clear()</span>
+<span class="ctx">          u2.plugin_register(&#x27;my&#x27;, _my_plugin, &#x27;pp&#x27;)</span>
+</pre><div class="choices" data-id="H051"></div></section>
+<section id="H052"><h2>H052 <small>Alir3z4/html2text · 8194cda63b · html2text/cli.py:103</small></h2><pre><span class="ctx">          dest=&quot;images_with_size&quot;,</span>
+<span class="ctx">          action=&quot;store_true&quot;,</span>
+<span class="ctx">          default=config.IMAGES_WITH_SIZE,</span>
+<span class="del">-         help=&quot;Write image tags with height and width attrs as raw html to &quot;</span>
+<span class="del">-              &quot;retain dimensions&quot;</span>
+<span class="add">+         help=(</span>
+<span class="add">+             &quot;Write image tags with height and width attrs as raw html to retain &quot;</span>
+<span class="add">+             &quot;dimensions&quot;</span>
+<span class="add">+         ),</span>
+<span class="ctx">      )</span>
+<span class="ctx">      p.add_argument(</span>
+<span class="ctx">          &quot;-g&quot;, &quot;--google-doc&quot;,</span>
+</pre><div class="choices" data-id="H052"></div></section>
+<section id="H053"><h2>H053 <small>celery/django-celery-results · b6b5878664 · django_celery_results/backends/database.py:11</small></h2><pre><span class="ctx">  from celery.utils.log import get_logger</span>
+<span class="ctx">  from kombu.exceptions import DecodeError</span>
+<span class="ctx">  from django.db import transaction</span>
+<span class="add">+ from kombu.exceptions import DecodeError</span>
+<span class="ctx">  </span>
+<span class="ctx">  from ..models import TaskResult, ChordCounter, GroupResult as GroupResultModel</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H053"></div></section>
+<section id="H054"><h2>H054 <small>gcovr/gcovr · 59248ef69c · gcovr/writer/cobertura.py:23</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  from ..version import __version__</span>
+<span class="ctx">  from ..utils import open_binary_for_writing, presentable_filename</span>
+<span class="add">+ from ..coverage import CovData</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def print_cobertura_report(covdata, output_file, options):</span>
+</pre><div class="choices" data-id="H054"></div></section>
+<section id="H055"><h2>H055 <small>veops/cmdb · d276b3122e · cmdb-api/api/tasks/cmdb.py:194</small></h2><pre><span class="ctx">  @reconnect_db</span>
+<span class="ctx">  def ci_relation_delete(parent_id, child_id, ancestor_ids):</span>
+<span class="ctx">      with redis_lock.Lock(rd.r, &quot;CIRelation_{}&quot;.format(parent_id)):</span>
+<span class="del">-         if ancestor_ids is None:</span>
+<span class="del">-             children = rd.get([parent_id], REDIS_PREFIX_CI_RELATION)[0]</span>
+<span class="del">-             children = json.loads(children) if children is not None else {}</span>
+<span class="add">+         children = rd.get([parent_id], REDIS_PREFIX_CI_RELATION)[0]</span>
+<span class="add">+         children = json.loads(children) if children is not None else {}</span>
+<span class="ctx">  </span>
+<span class="ctx">              if str(child_id) in children:</span>
+<span class="ctx">                  children.pop(str(child_id))</span>
+</pre><div class="choices" data-id="H055"></div></section>
+<section id="H056"><h2>H056 <small>veops/cmdb · a97d3d6198 · cmdb-api/api/lib/cmdb/ci_type.py:831</small></h2><pre><span class="ctx">              current_app.logger.warning(str(e))</span>
+<span class="ctx">              return abort(400, ErrFormat.circular_dependency_error)</span>
+<span class="ctx">  </span>
+<span class="del">-         # if constraint == ConstraintEnum.Many2Many:</span>
+<span class="del">-         #     other_c = CITypeRelation.get_by(parent_id=p.id, constraint=ConstraintEnum.Many2Many,</span>
+<span class="del">-         #                                     to_dict=False, first=True)</span>
+<span class="del">-         #     other_p = CITypeRelation.get_by(child_id=c.id, constraint=ConstraintEnum.Many2Many,</span>
+<span class="del">-         #                                     to_dict=False, first=True)</span>
+<span class="del">-         #     if other_c and other_c.child_id != c.id:</span>
+<span class="del">-         #         return abort(400, ErrFormat.m2m_relation_constraint.format(p.name, other_c.child.name))</span>
+<span class="del">-         #     if other_p and other_p.parent_id != p.id:</span>
+<span class="del">-         #         return abort(400, ErrFormat.m2m_relation_constraint.format(other_p.parent.name, c.name))</span>
+<span class="del">- </span>
+<span class="ctx">          existed = cls._get(p.id, c.id)</span>
+<span class="ctx">          if existed is not None:</span>
+<span class="ctx">              existed.update(relation_type_id=relation_type_id,</span>
+</pre><div class="choices" data-id="H056"></div></section>
+<section id="H057"><h2>H057 <small>celery/django-celery-results · b6b5878664 · setup.py:21</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  NAME = &#x27;django_celery_results&#x27;</span>
+<span class="ctx">  </span>
+<span class="del">- E_UNSUPPORTED_PYTHON = &#x27;%s 1.0 requires %%s %%s or later!&#x27; % (NAME,)</span>
+<span class="add">+ E_UNSUPPORTED_PYTHON = f&#x27;{NAME} 1.0 requires %s %s or later!&#x27;</span>
+<span class="ctx">  </span>
+<span class="ctx">  PYIMP = _pyimp()</span>
+<span class="ctx">  PY36_OR_LESS = sys.version_info &lt; (3, 6)</span>
+</pre><div class="choices" data-id="H057"></div></section>
+<section id="H058"><h2>H058 <small>opencobra/cobrapy · c5fa7a99d4 · cobra/io/sbml.py:1056</small></h2><pre><span class="ctx">                  gpr = gpr.replace(&#x27;(&#x27;, &#x27;( &#x27;)</span>
+<span class="ctx">                  gpr = gpr.replace(&#x27;)&#x27;, &#x27; )&#x27;)</span>
+<span class="ctx">                  gpr = gpr.replace(&#x27;  &#x27;, &#x27; &#x27;)</span>
+<span class="del">-                 tokens = gpr.split(&#x27; &#x27;)</span>
+<span class="add">+                 tokens = gpr.split()</span>
+<span class="ctx">  </span>
+<span class="ctx">                  for k in range(len(tokens)):</span>
+<span class="ctx">                      if tokens[k] not in [&#x27; &#x27;, &#x27;and&#x27;, &#x27;or&#x27;, &#x27;(&#x27;, &#x27;)&#x27;]:</span>
+</pre><div class="choices" data-id="H058"></div></section>
+<section id="H059"><h2>H059 <small>SolidCode/SolidPython · 17dec25a97 · solid/examples/animation_example.py:44</small></h2><pre><span class="ctx">                                                                    # to the end of the generated</span>
+<span class="ctx">                                                                    # OpenSCAD code.</span>
+<span class="ctx">      print(f&quot;{__file__}: SCAD file written to: \n{file_out}&quot;)</span>
+<span class="del">- </span>
+</pre><div class="choices" data-id="H059"></div></section>
+<section id="H060"><h2>H060 <small>veops/cmdb · ccce5c830a · cmdb-api/api/lib/perm/acl/role.py:312</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">          for i in RoleRelation.get_by(child_id=rid, to_dict=False):</span>
+<span class="ctx">              parent_ids.append(i.parent_id)</span>
+<span class="del">-             i.soft_delete(commit=False)</span>
+<span class="add">+             i.soft_delete()</span>
+<span class="ctx">  </span>
+<span class="ctx">          role_permissions = []</span>
+<span class="ctx">          for i in RolePermission.get_by(rid=rid, to_dict=False):</span>
+</pre><div class="choices" data-id="H060"></div></section>
+<section id="H061"><h2>H061 <small>kivy/python-for-android · 7de5d2b829 · pythonforandroid/recipes/aiohttp/__init__.py:12</small></h2><pre><span class="ctx">      version = &quot;v3.6.2&quot;</span>
+<span class="ctx">      url = &quot;https://github.com/aio-libs/aiohttp/archive/{version}.zip&quot;</span>
+<span class="ctx">      name = &quot;aiohttp&quot;</span>
+<span class="del">- </span>
+<span class="ctx">      depends: List[str] = [&quot;setuptools&quot;]</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H061"></div></section>
+<section id="H062"><h2>H062 <small>agronholm/typeguard · 2a3376ec72 · src/typeguard/_functions.py:85</small></h2><pre><span class="ctx">      if type_checks_suppressed:</span>
+<span class="ctx">          return True</span>
+<span class="ctx">  </span>
+<span class="del">-     # if vararg:</span>
+<span class="del">-     #     arguments[vararg[0]] = vararg[1], Tuple[vararg[2]]</span>
+<span class="del">-     #</span>
+<span class="del">-     # if kwarg:</span>
+<span class="del">-     #     arguments[kwarg[0]] = vararg[1], Dict[str, vararg[2]]</span>
+<span class="del">- </span>
+<span class="ctx">      for argname, (value, annotation) in arguments.items():</span>
+<span class="ctx">          if annotation is NoReturn or annotation is Never:</span>
+<span class="ctx">              exc = TypeCheckError(</span>
+</pre><div class="choices" data-id="H062"></div></section>
+<section id="H063"><h2>H063 <small>agronholm/typeguard · 38ab1249bc · src/typeguard/_transformer.py:822</small></h2><pre><span class="ctx">                          [</span>
+<span class="ctx">                              node.value,</span>
+<span class="ctx">                              Constant(node.target.id),</span>
+<span class="del">-                             node.annotation,</span>
+<span class="add">+                             annotation,</span>
+<span class="ctx">                              self._memo.get_memo_name(),</span>
+<span class="ctx">                          ],</span>
+<span class="ctx">                          [],</span>
+</pre><div class="choices" data-id="H063"></div></section>
+<section id="H064"><h2>H064 <small>opencobra/cobrapy · c5fa7a99d4 · cobra/io/sbml.py:1066</small></h2><pre><span class="ctx">                  gpr_new = gpr</span>
+<span class="ctx">  </span>
+<span class="ctx">              gpa = r_fbc.createGeneProductAssociation()  # noqa: E501 type: libsbml.GeneProductAssociation</span>
+<span class="del">-             # uses ids for GP and does not create GPs</span>
+<span class="add">+             # uses ids to identify GeneProducts (True),</span>
+<span class="add">+             # does not create GeneProducts (False)</span>
+<span class="ctx">              _check(gpa.setAssociation(gpr_new, True, False),</span>
+<span class="ctx">                     &quot;set gpr: &quot; + gpr_new)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H064"></div></section>
+<section id="H065"><h2>H065 <small>deschler/django-modeltranslation · fb3ee74674 · setup.py:39</small></h2><pre><span class="ctx">          &#x27;Environment :: Web Environment&#x27;,</span>
+<span class="ctx">          &#x27;Intended Audience :: Developers&#x27;,</span>
+<span class="ctx">          &#x27;Framework :: Django&#x27;,</span>
+<span class="del">-         &#x27;License :: OSI Approved :: BSD License&#x27;],</span>
+<span class="del">-     license=&#x27;New BSD&#x27;)</span>
+<span class="add">+         &#x27;License :: OSI Approved :: BSD License&#x27;,</span>
+<span class="add">+     ],</span>
+<span class="add">+     license=&#x27;New BSD&#x27;,</span>
+<span class="add">+ )</span>
+</pre><div class="choices" data-id="H065"></div></section>
+<section id="H066"><h2>H066 <small>pantsbuild/pants · 0bcc841c58 · src/python/pants/engine/process.py:540</small></h2><pre><span class="ctx">      search_path = create_path_env_var(request.search_path)</span>
+<span class="ctx">      result = await Get(</span>
+<span class="ctx">          ProcessResult,</span>
+<span class="del">-         # We use a volatile process to force re-run since any binary found on the host system today</span>
+<span class="del">-         # could be gone tomorrow. Ideally we&#x27;d only do this for local processes since all known</span>
+<span class="del">-         # remoting configurations include a static container image as part of their cache key which</span>
+<span class="del">-         # automatically avoids this problem. See #10769 for a solution that is less of a tradeoff.</span>
+<span class="ctx">          Process(</span>
+<span class="ctx">              description=f&quot;Searching for `{request.binary_name}` on PATH={search_path}&quot;,</span>
+<span class="ctx">              level=LogLevel.DEBUG,</span>
+</pre><div class="choices" data-id="H066"></div></section>
+<section id="H067"><h2>H067 <small>RLBot/RLBot · e2ba753aab · src/main/python/rlbot/parsing/agent_config_parser.py:91</small></h2><pre><span class="ctx">      header.add_value(&#x27;custom_color_id&#x27;, int, default=0, description=&#x27;Secondary Color selection&#x27;)</span>
+<span class="ctx">      header.add_value(&#x27;car_id&#x27;, int, default=23, description=&#x27;Car type (Octane, Merc, etc)&#x27;)</span>
+<span class="ctx">      header.add_value(&#x27;decal_id&#x27;, int, default=0, description=&#x27;Type of decal&#x27;)</span>
+<span class="del">-     header.add_value(&#x27;wheels_id&#x27;, int, default=1565, description=&#x27;Wheel selection&#x27;)</span>
+<span class="del">-     header.add_value(&#x27;boost_id&#x27;, int, default=35, description=&#x27;Boost selection&#x27;)</span>
+<span class="add">+     header.add_value(&#x27;wheels_id&#x27;, int, default=0, description=&#x27;Wheel selection&#x27;)</span>
+<span class="add">+     header.add_value(&#x27;boost_id&#x27;, int, default=0, description=&#x27;Boost selection&#x27;)</span>
+<span class="ctx">      header.add_value(&#x27;antenna_id&#x27;, int, default=0, description=&#x27;Antenna Selection&#x27;)</span>
+<span class="ctx">      header.add_value(&#x27;hat_id&#x27;, int, default=0, description=&#x27;Hat Selection&#x27;)</span>
+<span class="ctx">      header.add_value(&#x27;paint_finish_id&#x27;, int, default=1681, description=&#x27;Paint Type (for first color)&#x27;)</span>
+</pre><div class="choices" data-id="H067"></div></section>
+<section id="H068"><h2>H068 <small>DedSecInside/TorBot · df185a650f · modules/collect_data.py:21</small></h2><pre><span class="ctx">      raise FileNotFoundError</span>
+<span class="ctx">  load_dotenv(dotenv_path=dev_file)</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  def parse_links(html):</span>
+<span class="ctx">      &quot;&quot;&quot;Parses HTML page to extract links.</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H068"></div></section>
+<section id="H069"><h2>H069 <small>marshmallow-code/marshmallow-sqlalchemy · 78859eff46 · marshmallow_sqlalchemy/convert.py:89</small></h2><pre><span class="ctx">          else:</span>
+<span class="ctx">              return ma.Schema.TYPE_MAPPING</span>
+<span class="ctx">  </span>
+<span class="del">-     def fields_for_model(self, model, include_fk=False, fields=None, exclude=None, base_fields=None,</span>
+<span class="del">-                          dict_cls=dict):</span>
+<span class="add">+     def fields_for_model(</span>
+<span class="add">+         self, model, include_fk=False, fields=None, exclude=None, base_fields=None,</span>
+<span class="add">+         dict_cls=dict,</span>
+<span class="add">+     ):</span>
+<span class="ctx">          result = dict_cls()</span>
+<span class="ctx">          base_fields = base_fields or {}</span>
+<span class="ctx">          for prop in model.__mapper__.iterate_properties:</span>
+</pre><div class="choices" data-id="H069"></div></section>
+<section id="H070"><h2>H070 <small>RLBot/RLBot · e2ba753aab · src/main/python/rlbot/matchconfig/conversions.py:28</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def parse_match_config(config_parser: ConfigObject, config_location, config_bundle_overrides,</span>
+<span class="del">-                          looks_config_overrides) -&gt; MatchConfig:</span>
+<span class="add">+                        looks_config_overrides) -&gt; MatchConfig:</span>
+<span class="ctx">  </span>
+<span class="ctx">      match_config = MatchConfig()</span>
+<span class="ctx">      match_config.mutators = MutatorConfig()</span>
+</pre><div class="choices" data-id="H070"></div></section>
+<section id="H071"><h2>H071 <small>deschler/django-modeltranslation · d3e2396be6 · modeltranslation/tests/tests.py:142</small></h2><pre><span class="ctx">              # 1. Reload translation in case USE_I18N was False</span>
+<span class="ctx">              from django.utils import translation as dj_trans</span>
+<span class="ctx">  </span>
+<span class="del">-             imp.reload(dj_trans)</span>
+<span class="add">+     @classmethod</span>
+<span class="add">+     def tearDownClass(cls):</span>
+<span class="add">+         from modeltranslation.translator import translator</span>
+<span class="ctx">  </span>
+<span class="ctx">              # 2. Reload MT because LANGUAGES likely changed.</span>
+<span class="ctx">              imp.reload(mt_settings)</span>
+</pre><div class="choices" data-id="H071"></div></section>
+<section id="H072"><h2>H072 <small>kivy/python-for-android · 7de5d2b829 · pythonforandroid/recipes/aiohttp/__init__.py:6</small></h2><pre><span class="ctx">  from pythonforandroid.recipe import CythonRecipe  # type: ignore</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- class AIOHTTPRecipe(CythonRecipe):  # type: ignore # pylint: disable=R0903</span>
+<span class="del">-     &quot;&quot;&quot;Build AIOHTTP&quot;&quot;&quot;</span>
+<span class="del">- </span>
+<span class="del">-     version = &quot;v3.6.2&quot;</span>
+<span class="del">-     url = &quot;https://github.com/aio-libs/aiohttp/archive/{version}.zip&quot;</span>
+<span class="add">+ class AIOHTTPRecipe(CppCompiledComponentsPythonRecipe):  # type: ignore # pylint: disable=R0903</span>
+<span class="add">+     version = &quot;3.8.3&quot;</span>
+<span class="add">+     url = &quot;https://pypi.python.org/packages/source/a/aiohttp/aiohttp-{version}.tar.gz&quot;</span>
+<span class="ctx">      name = &quot;aiohttp&quot;</span>
+<span class="ctx">  </span>
+<span class="ctx">      depends: List[str] = [&quot;setuptools&quot;]</span>
+</pre><div class="choices" data-id="H072"></div></section>
+<section id="H073"><h2>H073 <small>opencobra/cobrapy · 65b708ed96 · cobra/core/model.py:59</small></h2><pre><span class="ctx">          Gene</span>
+<span class="ctx">      solution : Solution</span>
+<span class="ctx">          The last obtained solution from optimizing the model.</span>
+<span class="add">+    </span>
+<span class="ctx">      &quot;&quot;&quot;</span>
+<span class="ctx">  </span>
+<span class="ctx">      def __setstate__(self, state):</span>
+</pre><div class="choices" data-id="H073"></div></section>
+<section id="H074"><h2>H074 <small>FPGAwars/apio · 2c41cb2995 · apio/util.py:164</small></h2><pre><span class="ctx">          return os.getenv(_env_name)</span>
+<span class="ctx">      if config_data and _env_name in config_data.keys():</span>
+<span class="ctx">          return config_data.get(_env_name)</span>
+<span class="add">+ </span>
+<span class="ctx">      return default</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H074"></div></section>
+<section id="H075"><h2>H075 <small>theupdateframework/python-tuf · 580fd4d2a8 · tests/test_utils.py:56</small></h2><pre><span class="ctx">          sock.close()</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">-   def test_simple_server_startup(self):</span>
+<span class="del">-     # Test normal case</span>
+<span class="del">-     self.server_process_handler = utils.TestServerProcess(log=logger)</span>
+<span class="add">+ class TestServerProcess(unittest_toolbox.Modified_TestCase):</span>
+<span class="add">+     &quot;&quot;&quot;Test functionality provided in TestServerProcess from tests/utils.py.&quot;&quot;&quot;</span>
+<span class="ctx">  </span>
+<span class="ctx">      # Make sure we can connect to the server</span>
+<span class="ctx">      self.assertTrue(self.can_connect())</span>
+</pre><div class="choices" data-id="H075"></div></section>
+<section id="H076"><h2>H076 <small>secdev/scapy · 61f592cdcf · scapy/libs/winpcapy.py:219</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  #typedef int  bpf_int32 (already defined)</span>
+<span class="ctx">  #   32-bit integer</span>
+<span class="del">- #typedef u_int  bpf_u_int32 (already defined)</span>
+<span class="add">+ # typedef u_int  bpf_u_int32 (already defined)</span>
+<span class="ctx">  #   32-bit unsigned integer</span>
+<span class="ctx">  #typedef struct pcap  pcap_t</span>
+<span class="ctx">  #   Descriptor of an open capture instance. This structure is opaque to the user, that handles its content through the functions provided by wpcap.dll.  # noqa: E501</span>
+</pre><div class="choices" data-id="H076"></div></section>
+<section id="H077"><h2>H077 <small>Alir3z4/html2text · 8194cda63b · html2text/__init__.py:173</small></h2><pre><span class="ctx">          try:</span>
+<span class="ctx">              outtext = outtext.replace(unicode(&#x27;&amp;nbsp_place_holder;&#x27;), nbsp)</span>
+<span class="ctx">          except NameError:</span>
+<span class="del">-             outtext = outtext.replace(&#x27;&amp;nbsp_place_holder;&#x27;, nbsp)</span>
+<span class="add">+             outtext = outtext.replace(&quot;&amp;nbsp_place_holder;&quot;, nbsp)</span>
+<span class="ctx">  </span>
+<span class="ctx">          # Clear self.outtextlist to avoid memory leak of its content to</span>
+<span class="ctx">          # the next handling.</span>
+</pre><div class="choices" data-id="H077"></div></section>
+<section id="H078"><h2>H078 <small>jupyter/docker-stacks · e52fcda7c1 · tagging/tag_image.py:35</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      arg_parser = argparse.ArgumentParser()</span>
+<span class="ctx">      arg_parser.add_argument(</span>
+<span class="del">-         &quot;--short-image-name&quot;, required=True, help=&quot;Short image name to apply tags for&quot;</span>
+<span class="add">+         &quot;--short-image-name&quot;,</span>
+<span class="add">+         required=True,</span>
+<span class="add">+         help=&quot;Short image name to apply tags for&quot;,</span>
+<span class="ctx">      )</span>
+<span class="ctx">      arg_parser.add_argument(&quot;--owner&quot;, required=True, help=&quot;Owner of the image&quot;)</span>
+<span class="ctx">      args = arg_parser.parse_args()</span>
+</pre><div class="choices" data-id="H078"></div></section>
+<section id="H079"><h2>H079 <small>pytube/pytube · e276f3d568 · tests/test_streams.py:38</small></h2><pre><span class="ctx">      assert stream.title == expected</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="add">+ def test_caption_tracks(presigned_video):</span>
+<span class="add">+     assert len(presigned_video.caption_tracks) == 13</span>
+<span class="add">+ </span>
+<span class="add">+ </span>
+<span class="add">+ def test_captions(presigned_video):</span>
+<span class="add">+     assert len(presigned_video.captions.all()) == 13</span>
+<span class="add">+ </span>
+<span class="add">+ </span>
+<span class="ctx">  def test_description(cipher_signature):</span>
+<span class="ctx">      expected = (</span>
+<span class="ctx">          &quot;PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU\n&quot;</span>
+</pre><div class="choices" data-id="H079"></div></section>
+<section id="H080"><h2>H080 <small>netbox-community/netbox-docker · 3071c500da · configuration/ldap/ldap_config.py:74</small></h2><pre><span class="ctx">  # heirarchy.</span>
+<span class="ctx">  AUTH_LDAP_GROUP_SEARCH_BASEDN = environ.get(&#x27;AUTH_LDAP_GROUP_SEARCH_BASEDN&#x27;, &#x27;&#x27;)</span>
+<span class="ctx">  AUTH_LDAP_GROUP_SEARCH_CLASS = environ.get(&#x27;AUTH_LDAP_GROUP_SEARCH_CLASS&#x27;, &#x27;group&#x27;)</span>
+<span class="del">- AUTH_LDAP_GROUP_SEARCH = LDAPSearch(AUTH_LDAP_GROUP_SEARCH_BASEDN, ldap.SCOPE_SUBTREE,</span>
+<span class="del">-                                     &quot;(objectClass=&quot; + AUTH_LDAP_GROUP_SEARCH_CLASS + &quot;)&quot;)</span>
+<span class="add">+ </span>
+<span class="add">+ AUTH_LDAP_GROUP_SEARCH_FILTER: str = environ.get(</span>
+<span class="add">+     &#x27;AUTH_LDAP_GROUP_SEARCH_FILTER&#x27;, f&#x27;(objectclass={AUTH_LDAP_GROUP_SEARCH_CLASS})&#x27;</span>
+<span class="add">+ )</span>
+<span class="add">+ AUTH_LDAP_GROUP_SEARCH = LDAPSearch(</span>
+<span class="add">+     AUTH_LDAP_GROUP_SEARCH_BASEDN, ldap.SCOPE_SUBTREE, AUTH_LDAP_GROUP_SEARCH_FILTER</span>
+<span class="add">+ )</span>
+<span class="ctx">  AUTH_LDAP_GROUP_TYPE = _import_group_type(environ.get(&#x27;AUTH_LDAP_GROUP_TYPE&#x27;, &#x27;GroupOfNamesType&#x27;))</span>
+<span class="ctx">  </span>
+<span class="ctx">  # Define a group required to login.</span>
+</pre><div class="choices" data-id="H080"></div></section>
+<section id="H081"><h2>H081 <small>Toblerity/Fiona · dd57cbd597 · fiona/__init__.py:321</small></h2><pre><span class="ctx">          pobj_vfs = parse_path(vfs)</span>
+<span class="ctx">          pobj_path = parse_path(path)</span>
+<span class="ctx">          pobj = ParsedPath(pobj_path.path, pobj_vfs.path, pobj_vfs.scheme)</span>
+<span class="add">+ </span>
+<span class="ctx">      else:</span>
+<span class="ctx">          pobj = parse_path(path)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H081"></div></section>
+<section id="H082"><h2>H082 <small>openatx/uiautomator2 · b5e5ccddd3 · uiautomator2/__init__.py:610</small></h2><pre><span class="ctx">              self._grant_app_permissions()</span>
+<span class="ctx">              self.shell([&#x27;am&#x27;, &#x27;start&#x27;, &#x27;-a&#x27;, &#x27;android.intent.action.MAIN&#x27;, &#x27;-c&#x27;,</span>
+<span class="ctx">                          &#x27;android.intent.category.LAUNCHER&#x27;, &#x27;-n&#x27;, package_name + &quot;/&quot; + &quot;.ToastActivity&quot;])</span>
+<span class="del">-             # self.app_start(package_name,</span>
+<span class="del">-             #                &quot;.ToastActivity&quot;)  # -e showFloatWindow true</span>
+<span class="add">+             </span>
+<span class="ctx">          self.uiautomator.start()</span>
+<span class="ctx">  </span>
+<span class="ctx">          # wait until uiautomator2 service is working</span>
+</pre><div class="choices" data-id="H082"></div></section>
+<section id="H083"><h2>H083 <small>chaquo/chaquopy · cbe4962bd1 · server/pypi/build-wheel.py:38</small></h2><pre><span class="ctx">  PYTHON_VERSION = &quot;3.8&quot;  # Should be the same as the #! line above.</span>
+<span class="ctx">  PYTHON_SUFFIX = PYTHON_VERSION</span>
+<span class="ctx">  </span>
+<span class="del">- # All libraries are listed under their SONAMEs.</span>
+<span class="del">- STANDARD_LIBS = {</span>
+<span class="del">-     # Android-provided libraries up to our current minimum API level</span>
+<span class="del">-     # (https://developer.android.com/ndk/guides/stable_apis).</span>
+<span class="del">-     &quot;libandroid.so&quot;, &quot;libc.so&quot;, &quot;libdl.so&quot;, &quot;libEGL.so&quot;, &quot;libGLESv1_CM.so&quot;, &quot;libGLESv2.so&quot;,</span>
+<span class="del">-     &quot;libjnigraphics.so&quot;, &quot;liblog.so&quot;, &quot;libm.so&quot;, &quot;libOpenMAXAL.so&quot;, &quot;libOpenSLES.so&quot;,</span>
+<span class="del">-     &quot;libz.so&quot;,</span>
+<span class="add">+ # Libraries are grouped by minimum API level and listed under their SONAMEs.</span>
+<span class="add">+ STANDARD_LIBS = [</span>
+<span class="add">+     # Android native APIs (https://developer.android.com/ndk/guides/stable_apis)</span>
+<span class="add">+     (16, [&quot;libandroid.so&quot;, &quot;libc.so&quot;, &quot;libdl.so&quot;, &quot;libEGL.so&quot;, &quot;libGLESv1_CM.so&quot;, &quot;libGLESv2.so&quot;,</span>
+<span class="add">+           &quot;libjnigraphics.so&quot;, &quot;liblog.so&quot;, &quot;libm.so&quot;, &quot;libOpenMAXAL.so&quot;, &quot;libOpenSLES.so&quot;,</span>
+<span class="add">+           &quot;libz.so&quot;]),</span>
+<span class="add">+     (21, [&quot;libmediandk.so&quot;]),</span>
+<span class="ctx">  </span>
+<span class="ctx">      # Chaquopy-provided libraries (libpythonX.Y.so is added below)</span>
+<span class="ctx">      &quot;libcrypto_chaquopy.so&quot;, &quot;libsqlite3_chaquopy.so&quot;, &quot;libssl_chaquopy.so&quot;,</span>
+</pre><div class="choices" data-id="H083"></div></section>
+<section id="H084"><h2>H084 <small>celery/django-celery-results · ea4067ab2b · t/unit/backends/test_database.py:431</small></h2><pre><span class="ctx">          self.b.mark_as_done(tid2, result, request=request)</span>
+<span class="ctx">          mindb = self.b.get_task_meta(tid2)</span>
+<span class="ctx">  </span>
+<span class="add">+         # check task meta</span>
+<span class="ctx">          assert mindb.get(&#x27;result&#x27;) == &#x27;foo&#x27;</span>
+<span class="ctx">          assert mindb.get(&#x27;task_name&#x27;) == &#x27;my_task&#x27;</span>
+<span class="ctx">          assert mindb.get(&#x27;task_args&#x27;) == [&#x27;a&#x27;, 1, True]</span>
+</pre><div class="choices" data-id="H084"></div></section>
+<section id="H085"><h2>H085 <small>andikleen/pmu-tools · a452af719f · bdx_server_ratios.py:1948</small></h2><pre><span class="ctx">      metricgroup = [&#x27;FLOPS&#x27;]</span>
+<span class="ctx">      def compute(self, EV):</span>
+<span class="ctx">          try:</span>
+<span class="del">-             self.val = (EV(&quot;FP_ARITH_INST_RETIRED.SCALAR_SINGLE&quot;, 4) + EV(&quot;FP_ARITH_INST_RETIRED.SCALAR_DOUBLE&quot;, 4)) / EV(&quot;UOPS_RETIRED.RETIRE_SLOTS&quot;, 4)</span>
+<span class="add">+             self.val = (EV(&quot;FP_ARITH_INST_RETIRED.SCALAR_SINGLE&quot;, 4) + EV(&quot;FP_ARITH_INST_RETIRED.SCALAR_DOUBLE&quot;, 4)) / Retired_Slots(self, EV, 4)</span>
+<span class="ctx">              self.thresh = (self.val &gt; 0.1) &amp; self.parent.thresh</span>
+<span class="ctx">          except ZeroDivisionError:</span>
+<span class="ctx">              handle_error(self, &quot;FP_Scalar zero division&quot;)</span>
+</pre><div class="choices" data-id="H085"></div></section>
+<section id="H086"><h2>H086 <small>FPGAwars/apio · c635a97200 · apio/commands/build.py:15</small></h2><pre><span class="ctx">  # R0913: Too many arguments (6/5)</span>
+<span class="ctx">  # pylint: disable=R0913</span>
+<span class="ctx">  # pylint: disable=W0622</span>
+<span class="add">+ # pylint: disable=R0801</span>
+<span class="ctx">  @click.command(&quot;build&quot;)</span>
+<span class="ctx">  @click.pass_context</span>
+<span class="ctx">  @click.option(</span>
+</pre><div class="choices" data-id="H086"></div></section>
+<section id="H087"><h2>H087 <small>theupdateframework/python-tuf · 67a3a7ab92 · tuf/sig.py:81</small></h2><pre><span class="ctx">      * good -- Valid signature from key that is available in &#x27;tuf.keydb&#x27;, and is</span>
+<span class="ctx">        authorized for the passed role as per &#x27;tuf.roledb&#x27; (authorization may be</span>
+<span class="ctx">        overwritten by passed &#x27;keyids&#x27;).</span>
+<span class="del">-     * unknown -- Signature from key that is not available in &#x27;tuf.keydb&#x27;.</span>
+<span class="add">+     * unknown -- Signature from key that is not available in &#x27;tuf.keydb&#x27;, or if</span>
+<span class="add">+       &#x27;role&#x27; is None.</span>
+<span class="ctx">      * unknown signing schemes -- Signature from key with unknown signing</span>
+<span class="ctx">        scheme.</span>
+<span class="ctx">      * untrusted -- Valid signature from key that is available in &#x27;tuf.keydb&#x27;,</span>
+</pre><div class="choices" data-id="H087"></div></section>
+<section id="H088"><h2>H088 <small>SolidCode/SolidPython · 820564c979 · solid/objects.py:195</small></h2><pre><span class="ctx">      parameter is only needed for correctly displaying the object in OpenCSG </span>
+<span class="ctx">      preview mode and has no effect on the polyhedron rendering.</span>
+<span class="ctx">      :type convexity: int</span>
+<span class="del">-     &#x27;&#x27;&#x27;</span>
+<span class="del">-     def __init__(self, points:P3s, faces:Indexes, convexity:int=None, triangles:Indexes=None):</span>
+<span class="del">-         OpenSCADObject.__init__(self, &#x27;polyhedron&#x27;,</span>
+<span class="del">-                                 {&#x27;points&#x27;: points, &#x27;faces&#x27;: faces,</span>
+<span class="del">-                                  &#x27;convexity&#x27;: convexity,</span>
+<span class="del">-                                  &#x27;triangles&#x27;: triangles})</span>
+<span class="add">+     &quot;&quot;&quot;</span>
+<span class="add">+ </span>
+<span class="add">+     def __init__(self, points: P3s, faces: Indexes, convexity: int = None, triangles: Indexes = None) -&gt; None:</span>
+<span class="add">+         super().__init__(&#x27;polyhedron&#x27;,</span>
+<span class="add">+                          {&#x27;points&#x27;: points, &#x27;faces&#x27;: faces,</span>
+<span class="add">+                           &#x27;convexity&#x27;: convexity,</span>
+<span class="add">+                           &#x27;triangles&#x27;: triangles})</span>
+<span class="add">+ </span>
+<span class="ctx">  </span>
+<span class="ctx">  class union(OpenSCADObject):</span>
+<span class="ctx">      &#x27;&#x27;&#x27;</span>
+</pre><div class="choices" data-id="H088"></div></section>
+<section id="H089"><h2>H089 <small>Toblerity/Fiona · 2bc8cd047f · fiona/env.py:40</small></h2><pre><span class="ctx">          # Rasterio + older versions of GDAL halfway there.  One major</span>
+<span class="ctx">          # assumption is that environment variables are not set directly</span>
+<span class="ctx">          # with &#x27;osgeo.gdal.SetConfigOption()&#x27; OR</span>
+<span class="del">-         # &#x27;rasterio.env.set_gdal_config()&#x27; inside of a &#x27;rasterio.Env()&#x27;.</span>
+<span class="add">+         # &#x27;fiona.env.set_gdal_config()&#x27; inside of a &#x27;fiona.Env()&#x27;.</span>
+<span class="ctx">          self._discovered_options = None</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H089"></div></section>
+<section id="H090"><h2>H090 <small>pytube/pytube · b8192f2427 · pytube/compat.py:12</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  if PY2:</span>
+<span class="add">+     reload(sys)</span>
+<span class="add">+     sys.setdefaultencoding(&#x27;utf8&#x27;)</span>
+<span class="ctx">      import urllib2</span>
+<span class="ctx">      from urllib import urlencode</span>
+<span class="ctx">      from urllib2 import URLError</span>
+</pre><div class="choices" data-id="H090"></div></section>
+<section id="H091"><h2>H091 <small>chaquo/chaquopy · cbe4962bd1 · server/pypi/build-wheel.py:34</small></h2><pre><span class="ctx">  PROGRAM_NAME = basename(__file__)</span>
+<span class="ctx">  PYPI_DIR = abspath(dirname(__file__))</span>
+<span class="ctx">  </span>
+<span class="del">- # The suffix may contain flags from PEP 3149.</span>
+<span class="ctx">  PYTHON_VERSION = &quot;3.8&quot;  # Should be the same as the #! line above.</span>
+<span class="ctx">  PYTHON_SUFFIX = PYTHON_VERSION</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H091"></div></section>
+<section id="H092"><h2>H092 <small>openatx/uiautomator2 · d3fc2016bf · uiautomator2/__init__.py:193</small></h2><pre><span class="ctx">                  adbutils.AdbError) as e:</span>
+<span class="ctx">              if not retry:</span>
+<span class="ctx">                  raise</span>
+<span class="del">- </span>
+<span class="ctx">              # if atx-agent is already running, just raise error</span>
+<span class="ctx">              if isinstance(e, requests.RequestException) and \</span>
+<span class="ctx">                      self.__client._is_agent_alive():</span>
+</pre><div class="choices" data-id="H092"></div></section>
+<section id="H093"><h2>H093 <small>netbox-community/netbox-docker · 493fc60401 · startup_scripts/180_vrfs.py:31</small></h2><pre><span class="ctx">    if created:</span>
+<span class="ctx">      set_custom_fields_values(vrf, custom_field_data)</span>
+<span class="ctx">  </span>
+<span class="del">-     print(&quot;📦 Created VRF&quot;, vrf.name)</span>
+<span class="add">+         print(&quot;📦 Created VRF&quot;, vrf.name)</span>
+</pre><div class="choices" data-id="H093"></div></section>
+<section id="H094"><h2>H094 <small>chaquo/chaquopy · 3a8528f713 · product/gradle-plugin/src/main/python/pip/_vendor/packaging/markers.py:243</small></h2><pre><span class="ctx">          version += kind[0] + str(info.serial)</span>
+<span class="ctx">      return version</span>
+<span class="ctx">  </span>
+<span class="del">- # Chaquopy: this variable is set in cli/cmdoptions.py.</span>
+<span class="add">+ # Chaquopy: when installing for the target platform, this variable is set in</span>
+<span class="add">+ # cli/cmdoptions.py.</span>
+<span class="ctx">  python_version_info = None</span>
+<span class="ctx">  </span>
+<span class="ctx">  def default_environment():</span>
+</pre><div class="choices" data-id="H094"></div></section>
+<section id="H095"><h2>H095 <small>marshmallow-code/marshmallow-sqlalchemy · 692333bc21 · tests/test_sqlalchemy_schema.py:381</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def test_related_when_model_attribute_name_distinct_from_column_name(</span>
+<span class="del">-     models, session, teacher,</span>
+<span class="add">+     models,</span>
+<span class="add">+     session,</span>
+<span class="add">+     teacher,</span>
+<span class="ctx">  ):</span>
+<span class="ctx">      class TeacherSchema(SQLAlchemyAutoSchema):</span>
+<span class="ctx">          class Meta:</span>
+</pre><div class="choices" data-id="H095"></div></section>
+<section id="H096"><h2>H096 <small>cinemagoer/cinemagoer · d258a01c16 · imdb/parser/http/piculet.py:814</small></h2><pre><span class="ctx">  def h2x(source):</span>
+<span class="ctx">      &quot;&quot;&quot;Convert an HTML file into XHTML and print.</span>
+<span class="ctx">  </span>
+<span class="del">-     :sig: (str) -&gt; None</span>
+<span class="del">-     :param source: Path of HTML file to convert.</span>
+<span class="del">-     &quot;&quot;&quot;</span>
+<span class="del">-     if source == &#x27;-&#x27;:</span>
+<span class="del">-         _logger.debug(&#x27;reading from stdin&#x27;)</span>
+<span class="del">-         content = sys.stdin.read()</span>
+<span class="del">-     else:</span>
+<span class="del">-         _logger.debug(&#x27;reading from file: &quot;%s&quot;&#x27;, os.path.abspath(source))</span>
+<span class="del">-         with open(source, &#x27;rb&#x27;) as f:</span>
+<span class="del">-             content = decode_html(f.read())</span>
+<span class="del">-     print(html_to_xhtml(content), end=&#x27;&#x27;)</span>
+<span class="add">+     content = sys.stdin.read()</span>
+<span class="add">+     if arguments.html:</span>
+<span class="add">+         content = html_to_xhtml(content)</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def scrape_document(address, spec, content_format=&#x27;xml&#x27;):</span>
+</pre><div class="choices" data-id="H096"></div></section>
+<section id="H097"><h2>H097 <small>spesmilo/electrumx · 029ffb3874 · electrumx/lib/coins.py:59</small></h2><pre><span class="ctx">      __slots__ = &quot;raw&quot;, &quot;header&quot;, &quot;transactions&quot;</span>
+<span class="ctx">      raw: bytes</span>
+<span class="ctx">      header: bytes</span>
+<span class="del">-     transactions: Sequence</span>
+<span class="add">+     transactions: Sequence[Tuple[Tx, bytes]]</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  class CoinError(Exception):</span>
+</pre><div class="choices" data-id="H097"></div></section>
+<section id="H098"><h2>H098 <small>DedSecInside/TorBot · 8928e463b9 · modules/getweblinks.py:9</small></h2><pre><span class="ctx">  from requests.exceptions import ConnectionError, HTTPError</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- def valid_url(url):</span>
+<span class="add">+ def valid_url(url, extensions=False):</span>
+<span class="ctx">      &quot;&quot;&quot;Checks for any valid url using regular expression matching</span>
+<span class="ctx">  </span>
+<span class="ctx">          Matches all possible url patterns with the url that is passed and</span>
+</pre><div class="choices" data-id="H098"></div></section>
+<section id="H099"><h2>H099 <small>Alir3z4/html2text · 2a81874e47 · html2text/utils.py:15</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  unifiable_n = {}</span>
+<span class="del">- </span>
+<span class="ctx">  for k in config.UNIFIABLE.keys():</span>
+<span class="ctx">      unifiable_n[name2cp(k)] = config.UNIFIABLE[k]</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H099"></div></section>
+<section id="H100"><h2>H100 <small>pytube/pytube · 9dc966b643 · pytube/cli.py:336</small></h2><pre><span class="ctx">          [</span>
+<span class="ctx">              &quot;ffmpeg&quot;, &quot;-i&quot;,</span>
+<span class="ctx">              f&quot;{video_path}&quot;,</span>
+<span class="del">-             &quot;-i&quot;, f&quot;{audio_path}&quot;,</span>
+<span class="del">-             &quot;-codec&quot;, &quot;copy&quot;,</span>
+<span class="del">-             f&#x27;{final_path}&#x27;</span>
+<span class="add">+             &quot;-i&quot;,</span>
+<span class="add">+             f&quot;{audio_path}&quot;,</span>
+<span class="add">+             &quot;-codec&quot;,</span>
+<span class="add">+             &quot;copy&quot;,</span>
+<span class="add">+             f&quot;{final_path}&quot;,</span>
+<span class="ctx">          ]</span>
+<span class="ctx">      )</span>
+<span class="ctx">      video_path.unlink()</span>
+</pre><div class="choices" data-id="H100"></div></section>
+<section id="H101"><h2>H101 <small>opencobra/cobrapy · 65b708ed96 · cobra/core/configuration.py:119</small></h2><pre><span class="ctx">                  &lt;td&gt;&lt;strong&gt;Solver&lt;/strong&gt;&lt;/td&gt;</span>
+<span class="ctx">                  &lt;td&gt;{solver}&lt;/td&gt;</span>
+<span class="ctx">              &lt;/tr&gt;</span>
+<span class="add">+             &lt;tr&gt;</span>
+<span class="add">+                 &lt;td&gt;&lt;strong&gt;Tolerances&lt;/strong&gt;&lt;/td&gt;</span>
+<span class="add">+                 &lt;td&gt;{tolerances}&lt;/td&gt;</span>
+<span class="add">+             &lt;/tr&gt;</span>
+<span class="ctx">              &lt;tr&gt;</span>
+<span class="ctx">                  &lt;td&gt;&lt;strong&gt;Lower bound&lt;/strong&gt;&lt;/td&gt;</span>
+<span class="ctx">                  &lt;td&gt;{lower_bound}&lt;/td&gt;</span>
+</pre><div class="choices" data-id="H101"></div></section>
+<section id="H102"><h2>H102 <small>gcovr/gcovr · 54bd73a4e0 · gcovr/workers.py:14</small></h2><pre><span class="ctx">  # This software is distributed under the BSD License.</span>
+<span class="ctx">  # Under the terms of Contract DE-AC04-94AL85000 with Sandia Corporation,</span>
+<span class="ctx">  # the U.S. Government retains certain rights in this software.</span>
+<span class="add">+ #</span>
+<span class="add">+ # This software is distributed under the 3-clause BSD License.</span>
+<span class="ctx">  # For more information, see the README.rst file.</span>
+<span class="ctx">  #</span>
+<span class="ctx">  # ****************************************************************************</span>
+</pre><div class="choices" data-id="H102"></div></section>
+<section id="H103"><h2>H103 <small>theupdateframework/python-tuf · 15eb0d93c4 · tuf/api/metadata.py:296</small></h2><pre><span class="ctx">          self.spec_version = spec_version</span>
+<span class="ctx">          self.expires = expires</span>
+<span class="ctx">  </span>
+<span class="del">-         # TODO: Should we separate data validation from constructor?</span>
+<span class="ctx">          if version &lt;= 0:</span>
+<span class="ctx">              raise ValueError(f&quot;version must be &gt; 0, got {version}&quot;)</span>
+<span class="ctx">          self.version = version</span>
+</pre><div class="choices" data-id="H103"></div></section>
+<section id="H104"><h2>H104 <small>chaquo/chaquopy · 3a8528f713 · product/gradle-plugin/src/main/python/pip/_internal/cli/base_command.py:145</small></h2><pre><span class="ctx">      def main(self, args):</span>
+<span class="ctx">          # type: (List[str]) -&gt; int</span>
+<span class="ctx">          options, args = self.parse_args(args)</span>
+<span class="del">-         assert options.chaquopy, &quot;Chaquopy pip called without --chaquopy&quot;</span>
+<span class="ctx">  </span>
+<span class="ctx">          # Set verbosity so that it can be used elsewhere.</span>
+<span class="ctx">          self.verbosity = options.verbose - options.quiet</span>
+</pre><div class="choices" data-id="H104"></div></section>
+<section id="H105"><h2>H105 <small>jupyter/docker-stacks · 3f6d683f76 · pyspark-notebook/test/test_spark.py:19</small></h2><pre><span class="ctx">          tty=True,</span>
+<span class="ctx">          command=[&quot;start.sh&quot;, &quot;bash&quot;, &quot;-c&quot;, &#x27;spark-shell &lt;&lt;&lt; &quot;1+1&quot;&#x27;],</span>
+<span class="ctx">      )</span>
+<span class="del">-     # Spark warning</span>
+<span class="ctx">      warnings = TrackedContainer.get_warnings(logs)</span>
+<span class="ctx">      assert len(warnings) == 1</span>
+<span class="ctx">      assert &quot;An illegal reflective access operation has occurred&quot; in warnings[0]</span>
+</pre><div class="choices" data-id="H105"></div></section>
+<section id="H106"><h2>H106 <small>kivy/python-for-android · 22b7dfee1d · pythonforandroid/build.py:430</small></h2><pre><span class="ctx">          for executable in (&quot;pkg-config&quot;, &quot;autoconf&quot;, &quot;automake&quot;, &quot;libtoolize&quot;,</span>
+<span class="ctx">                             &quot;tar&quot;, &quot;bzip2&quot;, &quot;unzip&quot;, &quot;make&quot;, &quot;gcc&quot;, &quot;g++&quot;):</span>
+<span class="ctx">              if not sh.which(executable):</span>
+<span class="del">-                 warning(&quot;Missing executable: {} is not installed&quot;.format(</span>
+<span class="del">-                     executable))</span>
+<span class="add">+                 warning(f&quot;Missing executable: {executable} is not installed&quot;)</span>
+<span class="ctx">  </span>
+<span class="ctx">          if not ok:</span>
+<span class="ctx">              raise BuildInterruptingException(</span>
+</pre><div class="choices" data-id="H106"></div></section>
+<section id="H107"><h2>H107 <small>ikalchev/HAP-python · f372fe42e0 · pyhap/camera.py:784</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">          session_info[&#x27;process&#x27;] = process</span>
+<span class="ctx">  </span>
+<span class="del">-         logging.info(&#x27;[%s] Started stream process - PID %d&#x27;,</span>
+<span class="del">-                      session_info[&#x27;id&#x27;], process.pid)</span>
+<span class="add">+         logger.info(</span>
+<span class="add">+             &#x27;[%s] Started stream process - PID %d&#x27;,</span>
+<span class="add">+             session_info[&#x27;id&#x27;],</span>
+<span class="add">+             process.pid</span>
+<span class="add">+         )</span>
+<span class="ctx">  </span>
+<span class="ctx">          return True</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H107"></div></section>
+<section id="H108"><h2>H108 <small>PyDMD/PyDMD · 3e6b436605 · pydmd/bopdmd.py:334</small></h2><pre><span class="ctx">                  if ind_2 not in unassigned_inds:</span>
+<span class="ctx">                      msg = (</span>
+<span class="ctx">                          &quot;Error occurred while finding conjugate pairs. &quot;</span>
+<span class="del">-                         &quot;Please remove the \&quot;conjugate pairs\&quot; constraint and &quot;</span>
+<span class="add">+                         &#x27;Please remove the &quot;conjugate pairs&quot; constraint and &#x27;</span>
+<span class="ctx">                          &quot;check that your system eigenvalues approximately &quot;</span>
+<span class="ctx">                          &quot;consist of complex conjugate pairs.&quot;</span>
+<span class="ctx">                      )</span>
+</pre><div class="choices" data-id="H108"></div></section>
+<section id="H109"><h2>H109 <small>RLBot/RLBot · 95fc1a3744 · src/main/python/rlbot/utils/rendering/rendering_manager.py:104</small></h2><pre><span class="ctx">          if len(vectors) &lt; 2:</span>
+<span class="ctx">              get_logger(&quot;Renderer&quot;).error(&quot;draw_polyline_2d requires atleast 2 vectors!&quot;)</span>
+<span class="ctx">              return self</span>
+<span class="del">-         </span>
+<span class="add">+ </span>
+<span class="ctx">          messageBuilder = self.builder</span>
+<span class="ctx">  </span>
+<span class="ctx">          for i in range(0, len(vectors)-1):</span>
+</pre><div class="choices" data-id="H109"></div></section>
+<section id="H110"><h2>H110 <small>deschler/django-modeltranslation · da5d8c91ba · modeltranslation/tests/test_app/translation.py:7</small></h2><pre><span class="ctx">  class NewsTranslationOptions(TranslationOptions):</span>
+<span class="ctx">      fields = (&#x27;title&#x27;,)</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  translator.register(News, NewsTranslationOptions)</span>
+</pre><div class="choices" data-id="H110"></div></section>
+<section id="H111"><h2>H111 <small>marshmallow-code/marshmallow-sqlalchemy · 870afa7a83 · docs/conf.py:71</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  html_sidebars = {</span>
+<span class="ctx">      &#x27;index&#x27;: [</span>
+<span class="del">-         &#x27;about.html&#x27;, &#x27;useful-links.html&#x27;, &#x27;searchbox.html&#x27;, &#x27;donate.html&#x27;,</span>
+<span class="add">+         &#x27;about.html&#x27;, &#x27;useful-links.html&#x27;, &#x27;searchbox.html&#x27;</span>
+<span class="ctx">      ],</span>
+<span class="ctx">      &#x27;**&#x27;: [&#x27;about.html&#x27;, &#x27;useful-links.html&#x27;,</span>
+<span class="ctx">             &#x27;localtoc.html&#x27;, &#x27;relations.html&#x27;, &#x27;searchbox.html&#x27;, &#x27;donate.html&#x27;]</span>
+</pre><div class="choices" data-id="H111"></div></section>
+<section id="H112"><h2>H112 <small>flask-dashboard/Flask-MonitoringDashboard · b3704077fe · flask_monitoringdashboard/views/outlier.py:27</small></h2><pre><span class="ctx">          return jsonify(get_outlier_graph(db_session, endpoint_id))</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- @blueprint.route(&#x27;api/outlier_table/&lt;endpoint_id&gt;/&lt;offset&gt;/&lt;per_page&gt;&#x27;)</span>
+<span class="add">+ @blueprint.route(&#x27;/api/outlier_table/&lt;endpoint_id&gt;/&lt;offset&gt;/&lt;per_page&gt;&#x27;)</span>
+<span class="ctx">  @secure</span>
+<span class="ctx">  def outlier_table(endpoint_id, offset, per_page):</span>
+<span class="ctx">      with session_scope() as db_session:</span>
+</pre><div class="choices" data-id="H112"></div></section>
+<section id="H113"><h2>H113 <small>netbox-community/netbox-docker · 493fc60401 · startup_scripts/230_virtual_machines.py:34</small></h2><pre><span class="ctx">      model, field = details</span>
+<span class="ctx">      query = { field: params.pop(assoc) }</span>
+<span class="ctx">  </span>
+<span class="del">-     params[assoc] = model.objects.get(**query)</span>
+<span class="add">+         params[assoc] = model.objects.get(**query)</span>
+<span class="ctx">  </span>
+<span class="ctx">    for assoc, details in optional_assocs.items():</span>
+<span class="ctx">      if assoc in params:</span>
+</pre><div class="choices" data-id="H113"></div></section>
+<section id="H114"><h2>H114 <small>secdev/scapy · 4e83e5d2d4 · scapy/arch/pcapdnet.py:85</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  if conf.use_winpcapy:</span>
+<span class="ctx">      NPCAP_PATH = os.environ[&quot;WINDIR&quot;] + &quot;\\System32\\Npcap&quot;</span>
+<span class="del">-     #  Part of the code from https://github.com/phaethon/scapy translated to python2.X  # noqa: E501</span>
+<span class="add">+     # Part of the Winpcapy integration was inspired by phaethon/scapy</span>
+<span class="add">+     # but he destroyed the commit history, so there is no link to that</span>
+<span class="ctx">      try:</span>
+<span class="ctx">          from scapy.modules.winpcapy import PCAP_ERRBUF_SIZE, pcap_if_t, \</span>
+<span class="ctx">              sockaddr_in, sockaddr_in6, pcap_findalldevs, pcap_freealldevs, \</span>
+</pre><div class="choices" data-id="H114"></div></section>
+<section id="H115"><h2>H115 <small>pytube/pytube · 9dc966b643 · pytube/cli.py:315</small></h2><pre><span class="ctx">      :param Path target:</span>
+<span class="ctx">          A valid Path object</span>
+<span class="ctx">      &quot;&quot;&quot;</span>
+<span class="del">-     audio_stream = youtube.streams.filter(</span>
+<span class="del">-         only_audio=True, subtype=stream.subtype</span>
+<span class="del">-     ).order_by(&quot;abr&quot;).desc().first()</span>
+<span class="add">+     audio_stream = (</span>
+<span class="add">+         youtube.streams.filter(only_audio=True, subtype=stream.subtype)</span>
+<span class="add">+         .order_by(&quot;abr&quot;)</span>
+<span class="add">+         .desc()</span>
+<span class="add">+         .first()</span>
+<span class="add">+     )</span>
+<span class="ctx">  </span>
+<span class="ctx">      video_unique_name = unique_name(</span>
+<span class="ctx">          safe_filename(stream.title), stream.subtype, &quot;video&quot;, target=target</span>
+</pre><div class="choices" data-id="H115"></div></section>
+<section id="H116"><h2>H116 <small>kivy/python-for-android · 378b0251a7 · pythonforandroid/bootstraps/common/build/build.py:331</small></h2><pre><span class="ctx">      )</span>
+<span class="ctx">  </span>
+<span class="ctx">      if args.enable_androidx:</span>
+<span class="del">-         shutil.copy(&#x27;templates/gradle.properties&#x27;,&#x27;gradle.properties&#x27;)</span>
+<span class="del">-         </span>
+<span class="add">+         shutil.copy(&#x27;templates/gradle.properties&#x27;, &#x27;gradle.properties&#x27;)</span>
+<span class="add">+ </span>
+<span class="ctx">      if get_bootstrap_name() != &quot;service_only&quot;:</span>
+<span class="ctx">          lottie_splashscreen = join(res_dir, &#x27;raw/splashscreen.json&#x27;)</span>
+<span class="ctx">          if args.presplash_lottie:</span>
+</pre><div class="choices" data-id="H116"></div></section>
+<section id="H117"><h2>H117 <small>SolidCode/SolidPython · 9bd8df5c64 · solid/splines.py:107</small></h2><pre><span class="ctx">      if include_last:</span>
+<span class="ctx">          num_points += 1</span>
+<span class="ctx">  </span>
+<span class="del">-     p0, p1, p2, p3 = controls</span>
+<span class="add">+     p0, p1, p2, p3 = [euclidify(p, Point2) for p in controls]</span>
+<span class="ctx">      a = 2 * p1</span>
+<span class="ctx">      b = p2 - p0</span>
+<span class="ctx">      c = 2* p0 - 5*p1 + 4*p2 - p3</span>
+</pre><div class="choices" data-id="H117"></div></section>
+<section id="H118"><h2>H118 <small>netbox-community/netbox-docker · 58050e5287 · docker/configuration.docker.py:0</small></h2><pre><span class="add">+ ## Generic Parts</span>
+<span class="add">+ # These functions are providing the functionality to load</span>
+<span class="add">+ # arbitrary configuration files.</span>
+<span class="add">+ #</span>
+<span class="add">+ # They can be imported by other code (see `ldap_config.py` for an example).</span>
+<span class="add">+ </span>
+<span class="ctx">  from os.path import abspath, isfile</span>
+<span class="ctx">  from os import scandir</span>
+<span class="ctx">  import importlib.util</span>
+</pre><div class="choices" data-id="H118"></div></section>
+<section id="H119"><h2>H119 <small>chaquo/chaquopy · 22bff02f1a · product/gradle-plugin/src/main/python/setuptools/command/build_py.py:211</small></h2><pre><span class="ctx">          # flatten the groups of matches into an iterable of matches</span>
+<span class="ctx">          matches = itertools.chain.from_iterable(match_groups)</span>
+<span class="ctx">          bad = set(matches)</span>
+<span class="del">-         keepers = (</span>
+<span class="del">-             fn</span>
+<span class="del">-             for fn in files</span>
+<span class="del">-             if fn not in bad</span>
+<span class="del">-         )</span>
+<span class="add">+         keepers = (fn for fn in files if fn not in bad)</span>
+<span class="ctx">          # ditch dupes</span>
+<span class="ctx">          return list(_unique_everseen(keepers))</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H119"></div></section>
+<section id="H120"><h2>H120 <small>opencobra/cobrapy · 5daee7230a · src/cobra/test/test_flux_analysis/test_variability.py:43</small></h2><pre><span class="ctx">      model.solver = all_solvers</span>
+<span class="ctx">      with pytest.warns(UserWarning):</span>
+<span class="ctx">          flux_variability_analysis(</span>
+<span class="del">-             model, pfba_factor=0.1, reaction_list=model.reactions[1::3], processes=1</span>
+<span class="add">+             model,</span>
+<span class="add">+             pfba_factor=0.1,</span>
+<span class="add">+             reaction_list=model.reactions[1::3],</span>
+<span class="add">+             processes=1,</span>
+<span class="ctx">          )</span>
+<span class="ctx">      fva_out = flux_variability_analysis(</span>
+<span class="ctx">          model, pfba_factor=1.1, reaction_list=model.reactions, processes=1</span>
+</pre><div class="choices" data-id="H120"></div></section>
+<section id="H121"><h2>H121 <small>MalloyDelacroix/DownloaderForReddit · 30bd57c4ff · DownloaderForReddit/GUI_Resources/AddRedditObjectDialog_auto.py:8</small></h2><pre><span class="ctx">  #</span>
+<span class="ctx">  # WARNING! All changes made in this file will be lost!</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  from PyQt5 import QtCore, QtGui, QtWidgets</span>
+<span class="ctx">  </span>
+<span class="ctx">  class Ui_add_reddit_object_dialog(object):</span>
+</pre><div class="choices" data-id="H121"></div></section>
+<section id="H122"><h2>H122 <small>spesmilo/electrumx · ea9fe20c62 · electrumx/server/session.py:1858</small></h2><pre><span class="ctx">              txid = update[&#x27;tx_hash&#x27;]</span>
+<span class="ctx">              height = update[&#x27;height&#x27;]</span>
+<span class="ctx">  </span>
+<span class="del">-             if self.coin.NAME_EXPIRATION is not None and prev_height is not None and height &lt; prev_height - self.coin.NAME_EXPIRATION:</span>
+<span class="add">+             if (self.coin.NAME_EXPIRATION is not None</span>
+<span class="add">+                     and prev_height is not None</span>
+<span class="add">+                     and height &lt; prev_height - self.coin.NAME_EXPIRATION):</span>
+<span class="ctx">                  break</span>
+<span class="ctx">  </span>
+<span class="ctx">              tx = await(self.transaction_get(txid))</span>
+</pre><div class="choices" data-id="H122"></div></section>
+<section id="H123"><h2>H123 <small>jupyter/docker-stacks · bf9660a054 · test/test_packages.py:139</small></h2><pre><span class="ctx">      for package in filtered_packages:</span>
+<span class="ctx">          LOGGER.info(f&quot;Trying to import {package}&quot;)</span>
+<span class="ctx">          try:</span>
+<span class="del">-             assert (</span>
+<span class="del">-                 check_function(package_helper, package) == 0</span>
+<span class="del">-             ), f&quot;Package [{package}] import failed&quot;</span>
+<span class="add">+             assert check_function(package_helper, package) == 0, \</span>
+<span class="add">+                 f&quot;Package [{package}] import failed&quot;</span>
+<span class="ctx">          except AssertionError as err:</span>
+<span class="ctx">              failures[package] = err</span>
+<span class="ctx">      if len(failures) &gt; max_failures:</span>
+</pre><div class="choices" data-id="H123"></div></section>
+<section id="H124"><h2>H124 <small>SolidCode/SolidPython · b8eda787ca · solid/utils.py:194</small></h2><pre><span class="ctx">  def rot_z_to_back(obj:OpenSCADObject) -&gt; OpenSCADObject:</span>
+<span class="ctx">      return rotate(a=90, v=RIGHT_VEC)(obj)</span>
+<span class="ctx">  </span>
+<span class="del">- </span>
+<span class="ctx">  # ================================</span>
+<span class="ctx">  # = Box-aligment and translation =</span>
+<span class="ctx">  # ================================</span>
+</pre><div class="choices" data-id="H124"></div></section>
+<section id="H125"><h2>H125 <small>openatx/uiautomator2 · 4b849e5aed · uiautomator2/xpath.py:389</small></h2><pre><span class="ctx">          self._last_source = None</span>
+<span class="ctx">          self._position = None</span>
+<span class="ctx">          self._fallback = None</span>
+<span class="del">-         self._xpath_list = []</span>
+<span class="del">- </span>
+<span class="del">-         self.xpath(xpath)</span>
+<span class="add">+         self._xpath_list = (strict_xpath(xpath, self.logger),) if xpath else ()</span>
+<span class="ctx">  </span>
+<span class="ctx">      def __str__(self):</span>
+<span class="ctx">          return f&quot;XPathSelector({&#x27;|&#x27;.join(self._xpath_list)}&quot;</span>
+</pre><div class="choices" data-id="H125"></div></section>
+<section id="H126"><h2>H126 <small>spesmilo/electrumx · 029ffb3874 · electrumx/server/block_processor.py:468</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">          return undo_info</span>
+<span class="ctx">  </span>
+<span class="del">-     def backup_blocks(self, raw_blocks):</span>
+<span class="add">+     def backup_blocks(self, raw_blocks: Sequence[bytes]):</span>
+<span class="ctx">          &#x27;&#x27;&#x27;Backup the raw blocks and flush.</span>
+<span class="ctx">  </span>
+<span class="ctx">          The blocks should be in order of decreasing height, starting at.</span>
+</pre><div class="choices" data-id="H126"></div></section>
+<section id="H127"><h2>H127 <small>Toblerity/Fiona · 7ecfab6d5e · tests/test_slice.py:62</small></h2><pre><span class="ctx">          items = list(src.items(0, None))</span>
+<span class="ctx">          assert len(items) == count</span>
+<span class="ctx">  </span>
+<span class="del">-         items = list(src.items(5, None))</span>
+<span class="del">-         assert len(items) == (count - 5)</span>
+<span class="add">+     positions = list(range(min_id, max_id + 1))[start:stop:step]</span>
+<span class="ctx">  </span>
+<span class="ctx">          items = list(src.items(5, None, -1))</span>
+<span class="ctx">          assert len(items) == 6</span>
+</pre><div class="choices" data-id="H127"></div></section>
+<section id="H128"><h2>H128 <small>deschler/django-modeltranslation · ab79ec8512 · modeltranslation/tests/models.py:485</small></h2><pre><span class="ctx">      pass</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- # Non-abstract base models whos Manager is not allowed to be overwritten</span>
+<span class="add">+ # Non-abstract base models whose Manager is not allowed to be overwritten</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  class InheritedPermission(Permission):</span>
+</pre><div class="choices" data-id="H128"></div></section>
+<section id="H129"><h2>H129 <small>netbox-community/netbox-docker · 9fab9a3434 · configuration/plugins.py:3</small></h2><pre><span class="ctx">  # Add your plugins and plugin settings here.</span>
+<span class="ctx">  # Of course uncomment this file out.</span>
+<span class="ctx">  </span>
+<span class="add">+ # To learn how to build images with your required plugins</span>
+<span class="add">+ # See https://github.com/netbox-community/netbox-docker/wiki/Using-Netbox-Plugins</span>
+<span class="add">+ </span>
+<span class="ctx">  # PLUGINS = [&quot;netbox_onboarding&quot;]</span>
+<span class="ctx">  </span>
+<span class="ctx">  # PLUGINS_CONFIG = {</span>
+</pre><div class="choices" data-id="H129"></div></section>
+<section id="H130"><h2>H130 <small>deschler/django-modeltranslation · da5d8c91ba · modeltranslation/utils.py:54</small></h2><pre><span class="ctx">      if lang == &#x27;id&#x27;:</span>
+<span class="ctx">          lang = &#x27;ind&#x27;</span>
+<span class="ctx">      return force_str(&#x27;%s [%s]&#x27;) % (force_str(verbose_name), lang)</span>
+<span class="add">+ </span>
+<span class="add">+ </span>
+<span class="ctx">  build_localized_verbose_name = lazy(_build_localized_verbose_name, six.text_type)</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H130"></div></section>
+<section id="H131"><h2>H131 <small>RLBot/RLBot · 95fc1a3744 · src/main/python/rlbot/utils/rendering/rendering_manager.py:112</small></h2><pre><span class="ctx">              RenderMessage.RenderMessageAddRenderType(messageBuilder, RenderType.DrawLine2D)</span>
+<span class="ctx">              RenderMessage.RenderMessageAddColor(messageBuilder, color)</span>
+<span class="ctx">              RenderMessage.RenderMessageAddStart(messageBuilder, self.__create_vector(vectors[i]))</span>
+<span class="del">-             RenderMessage.RenderMessageAddEnd(messageBuilder, self.__create_vector(vectors[i+1]))</span>
+<span class="add">+             RenderMessage.RenderMessageAddEnd(messageBuilder, self.__create_vector(vectors[i + 1]))</span>
+<span class="ctx">              message = RenderMessage.RenderMessageEnd(messageBuilder)</span>
+<span class="ctx">              self.render_list.append(message)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H131"></div></section>
+<section id="H132"><h2>H132 <small>cinemagoer/cinemagoer · 8f1762f7ef · imdb/parser/http/movieParser.py:1895</small></h2><pre><span class="ctx">          (re.compile(&#x27;&lt;p&gt;(.*?)&lt;/p&gt;&#x27;, re.I), r&#x27;\1&lt;br/&gt;&#x27;),</span>
+<span class="ctx">          (re.compile(&#x27;(&lt;/td&gt;&lt;td valign=&quot;top&quot;&gt;)&#x27;, re.I), r&#x27;\1::&#x27;),</span>
+<span class="ctx">          (re.compile(&#x27;(&lt;/tr&gt;&lt;tr&gt;)&#x27;, re.I), r&#x27;\n\1&#x27;),</span>
+<span class="del">-         (re.compile(&#x27;&lt;span class=&quot;ghost&quot;&gt;\|&lt;/span&gt;&#x27;, re.I), r&#x27;:::&#x27;),</span>
+<span class="add">+         (re.compile(r&#x27;&lt;span class=&quot;ghost&quot;&gt;\|&lt;/span&gt;&#x27;, re.I), r&#x27;:::&#x27;),</span>
+<span class="ctx">          (re.compile(&#x27;&lt;br/?&gt;&#x27;, re.I), r&#x27;:::&#x27;)</span>
+<span class="ctx">          # this is for splitting individual entries</span>
+<span class="ctx">      ]</span>
+</pre><div class="choices" data-id="H132"></div></section>
+<section id="H133"><h2>H133 <small>MalloyDelacroix/DownloaderForReddit · 5e66d6f46f · DownloaderForReddit/GUI_Resources/RedditObjectSettingsDialog_auto.py:197</small></h2><pre><span class="ctx">          self.download_images_checkbox = QtWidgets.QCheckBox(self.layoutWidget_2)</span>
+<span class="ctx">          self.download_images_checkbox.setText(&quot;&quot;)</span>
+<span class="ctx">          self.download_images_checkbox.setObjectName(&quot;download_images_checkbox&quot;)</span>
+<span class="del">-         self.post_download_form.setWidget(10, QtWidgets.QFormLayout.FieldRole, self.download_images_checkbox)</span>
+<span class="add">+         self.post_download_form.setWidget(12, QtWidgets.QFormLayout.FieldRole, self.download_images_checkbox)</span>
+<span class="ctx">          self.label_29 = QtWidgets.QLabel(self.layoutWidget_2)</span>
+<span class="ctx">          self.label_29.setObjectName(&quot;label_29&quot;)</span>
+<span class="ctx">          self.post_download_form.setWidget(11, QtWidgets.QFormLayout.LabelRole, self.label_29)</span>
+</pre><div class="choices" data-id="H133"></div></section>
+<section id="H134"><h2>H134 <small>ikalchev/HAP-python · dae7650f9f · tests/test_accessory.py:395</small></h2><pre><span class="ctx">      acc2 = Accessory(mock_driver, &quot;Test Accessory 2&quot;)</span>
+<span class="ctx">      bridge.add_accessory(acc2)</span>
+<span class="ctx">  </span>
+<span class="del">-     await bridge.run()</span>
+<span class="del">-     assert mock_driver.async_add_job.called</span>
+<span class="del">-     await bridge.stop()</span>
+<span class="add">+         await bridge.run()</span>
+<span class="add">+         await bridge.stop()</span>
+<span class="add">+     assert acc.stopped is True</span>
+<span class="add">+     assert acc2.stopped is True</span>
+</pre><div class="choices" data-id="H134"></div></section>
+<section id="H135"><h2>H135 <small>gcovr/gcovr · e6e7fde9ec · setup.py:5</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  #  ************************** Copyrights and license ***************************</span>
+<span class="ctx">  #</span>
+<span class="del">- # This file is part of gcovr 5.0, a parsing and reporting tool for gcov.</span>
+<span class="add">+ # This file is part of gcovr 5.1, a parsing and reporting tool for gcov.</span>
+<span class="ctx">  # https://gcovr.com/en/stable</span>
+<span class="ctx">  #</span>
+<span class="ctx">  # _____________________________________________________________________________</span>
+</pre><div class="choices" data-id="H135"></div></section>
+<section id="H136"><h2>H136 <small>deschler/django-modeltranslation · fb3ee74674 · setup.py:24</small></h2><pre><span class="ctx">      maintainer=&#x27;Dirk Eschler&#x27;,</span>
+<span class="ctx">      maintainer_email=&#x27;eschler@gmail.com&#x27;,</span>
+<span class="ctx">      url=&#x27;https://github.com/deschler/django-modeltranslation&#x27;,</span>
+<span class="del">-     packages=[&#x27;modeltranslation&#x27;, &#x27;modeltranslation.management&#x27;,</span>
+<span class="del">-               &#x27;modeltranslation.management.commands&#x27;],</span>
+<span class="del">-     package_data={&#x27;modeltranslation&#x27;: [&#x27;static/modeltranslation/css/*.css&#x27;,</span>
+<span class="del">-                                        &#x27;static/modeltranslation/js/*.js&#x27;]},</span>
+<span class="add">+     packages=[</span>
+<span class="add">+         &#x27;modeltranslation&#x27;,</span>
+<span class="add">+         &#x27;modeltranslation.management&#x27;,</span>
+<span class="add">+         &#x27;modeltranslation.management.commands&#x27;,</span>
+<span class="add">+     ],</span>
+<span class="add">+     package_data={</span>
+<span class="add">+         &#x27;modeltranslation&#x27;: [</span>
+<span class="add">+             &#x27;static/modeltranslation/css/*.css&#x27;,</span>
+<span class="add">+             &#x27;static/modeltranslation/js/*.js&#x27;,</span>
+<span class="add">+         ]</span>
+<span class="add">+     },</span>
+<span class="ctx">      install_requires=[&#x27;Django&gt;=2.2&#x27;, &#x27;six&#x27;],</span>
+<span class="ctx">      download_url=&#x27;https://github.com/deschler/django-modeltranslation/archive/%s.tar.gz&#x27; % version,</span>
+<span class="ctx">      classifiers=[</span>
+</pre><div class="choices" data-id="H136"></div></section>
+<section id="H137"><h2>H137 <small>Toblerity/Fiona · 954fdc6996 · fiona/compat.py:12</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  if sys.version_info[0] &gt;= 3:</span>
+<span class="ctx">      from urllib.parse import urlparse</span>
+<span class="del">-     from collections import UserDict, OrderedDict</span>
+<span class="add">+     from collections import UserDict</span>
+<span class="ctx">  else:</span>
+<span class="ctx">      from urlparse import urlparse</span>
+<span class="ctx">      from UserDict import UserDict</span>
+</pre><div class="choices" data-id="H137"></div></section>
+<section id="H138"><h2>H138 <small>cinemagoer/cinemagoer · d258a01c16 · imdb/parser/http/piculet.py:195</small></h2><pre><span class="ctx">                      print(&#x27;&lt;/%(tag)s&gt;&#x27; % {&#x27;tag&#x27;: tag}, end=&#x27;&#x27;)</span>
+<span class="ctx">                      self._open_tags.pop()</span>
+<span class="ctx">                  elif tag not in self._open_tags:</span>
+<span class="del">-                     _logger.debug(&#x27;closing tag &quot;%s&quot; without opening tag&#x27;, tag)</span>
+<span class="ctx">                      # XXX: for &lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;, this case gets invoked after the case below</span>
+<span class="ctx">                  elif tag == self._open_tags[-2]:</span>
+<span class="ctx">                      _logger.debug(&#x27;unexpected closing tag &quot;%s&quot; instead of &quot;%s&quot;, closing both&#x27;,</span>
+</pre><div class="choices" data-id="H138"></div></section>
+<section id="H139"><h2>H139 <small>chaquo/chaquopy · 22bff02f1a · product/gradle-plugin/src/main/python/setuptools/msvc.py:588</small></h2><pre><span class="ctx">                      continue</span>
+<span class="ctx">                  subkeys, values, _ = winreg.QueryInfoKey(bkey)</span>
+<span class="ctx">                  for i in range(values):</span>
+<span class="del">-                     try:</span>
+<span class="add">+                     with contextlib.suppress(ValueError):</span>
+<span class="ctx">                          ver = float(winreg.EnumValue(bkey, i)[0])</span>
+<span class="ctx">                          if ver not in vs_vers:</span>
+<span class="ctx">                              vs_vers.append(ver)</span>
+</pre><div class="choices" data-id="H139"></div></section>
+<section id="H140"><h2>H140 <small>veops/cmdb · a97d3d6198 · cmdb-api/api/tasks/cmdb.py:90</small></h2><pre><span class="ctx">  @celery.task(name=&quot;cmdb.delete_id_filter&quot;, queue=CMDB_QUEUE)</span>
+<span class="ctx">  @reconnect_db</span>
+<span class="ctx">  def delete_id_filter(ci_id):</span>
+<span class="del">- </span>
+<span class="ctx">      CIFilterPermsCRUD().delete_id_filter_by_ci_id(ci_id)</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H140"></div></section>
+<section id="H141"><h2>H141 <small>DedSecInside/TorBot · 980d6610fd · modules/getweblinks.py:2</small></h2><pre><span class="ctx">  import re</span>
+<span class="ctx">  import requests</span>
+<span class="add">+ </span>
+<span class="ctx">  from bs4 import BeautifulSoup</span>
+<span class="ctx">  from modules.bcolors import Bcolors</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H141"></div></section>
+<section id="H142"><h2>H142 <small>DedSecInside/TorBot · df185a650f · modules/collect_data.py:52</small></h2><pre><span class="ctx">          meta_content.append(content)</span>
+<span class="ctx">      return meta_content</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  def collect_data():</span>
+<span class="ctx">      &quot;&quot;&quot;Collect all relevant data from https://thehiddenwiki.org</span>
+<span class="ctx">      and save to file.</span>
+</pre><div class="choices" data-id="H142"></div></section>
+<section id="H143"><h2>H143 <small>pytube/pytube · e276f3d568 · tests/test_cli.py:216</small></h2><pre><span class="ctx">      youtube.streams = stream_query</span>
+<span class="ctx">      cli._download = MagicMock()</span>
+<span class="ctx">      with pytest.raises(SystemExit):</span>
+<span class="del">-         cli.download_by_resolution(youtube=youtube, resolution=&quot;DOESNT EXIST&quot;, target=&quot;test_target&quot;)</span>
+<span class="add">+         cli.download_by_resolution(</span>
+<span class="add">+             youtube=youtube, resolution=&quot;DOESNT EXIST&quot;, target=&quot;test_target&quot;</span>
+<span class="add">+         )</span>
+<span class="ctx">      cli._download.assert_not_called()</span>
+</pre><div class="choices" data-id="H143"></div></section>
+<section id="H144"><h2>H144 <small>secdev/scapy · 49aeec8e4e · scapy/data.py:216</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def load_manuf(filename):</span>
+<span class="add">+     &quot;&quot;&quot;Load manuf file from Wireshark.</span>
+<span class="add">+     param:</span>
+<span class="add">+      - filename: the file to load the manuf file from&quot;&quot;&quot;</span>
+<span class="ctx">      manufdb = ManufDA(_name=filename)</span>
+<span class="ctx">      with open(filename, &quot;rb&quot;) as fdesc:</span>
+<span class="ctx">          for line in fdesc:</span>
+</pre><div class="choices" data-id="H144"></div></section>
+<section id="H145"><h2>H145 <small>PyDMD/PyDMD · 84a2f229a7 · tests/test_bopdmd.py:21</small></h2><pre><span class="ctx">      &quot;&quot;&quot;</span>
+<span class="ctx">      Given a time vector t = t1, t2, ..., evaluates and returns the snapshots</span>
+<span class="ctx">      z(t1), z(t2), ... as columns of the matrix Z via explicit Runge-Kutta.</span>
+<span class="del">- </span>
+<span class="ctx">      Simulates data z given by the system of ODEs</span>
+<span class="ctx">          z&#x27; = Az</span>
+<span class="ctx">      where A = [1 -2; 1 -1] and z_0 = [1, 0.1].</span>
+</pre><div class="choices" data-id="H145"></div></section>
+<section id="H146"><h2>H146 <small>pytube/pytube · 1b49c2438e · pytube/query.py:186</small></h2><pre><span class="ctx">          ]</span>
+<span class="ctx">  </span>
+<span class="ctx">          # Check that the attributes have string values.</span>
+<span class="del">-         if has_attribute and isinstance(</span>
+<span class="del">-             getattr(has_attribute[0], attribute_name), str</span>
+<span class="del">-         ):</span>
+<span class="add">+         if has_attribute and isinstance(getattr(has_attribute[0], attribute_name), str):</span>
+<span class="ctx">              # Try to return a StreamQuery sorted by the integer representations</span>
+<span class="ctx">              # of the values.</span>
+<span class="ctx">              try:</span>
+</pre><div class="choices" data-id="H146"></div></section>
+<section id="H147"><h2>H147 <small>Alir3z4/html2text · ce2c7e4388 · html2text/__init__.py:440</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">          def link_url(self, link, title=&quot;&quot;):</span>
+<span class="ctx">              url = urlparse.urljoin(self.baseurl, link)</span>
+<span class="del">-             title = &#x27; &quot;{0}&quot;&#x27;.format(title) if title.strip() else &#x27;&#x27;</span>
+<span class="del">-             self.o(&#x27;]({url}{title})&#x27;.format(url=escape_md(url),</span>
+<span class="add">+             title = u&#x27; &quot;{0}&quot;&#x27;.format(title) if title.strip() else &#x27;&#x27;</span>
+<span class="add">+             self.o(u&#x27;]({url}{title})&#x27;.format(url=escape_md(url),</span>
+<span class="ctx">                                              title=title))</span>
+<span class="ctx">  </span>
+<span class="ctx">          if tag == &quot;a&quot; and not self.ignore_links:</span>
+</pre><div class="choices" data-id="H147"></div></section>
+<section id="H148"><h2>H148 <small>veops/cmdb · bba3a2b931 · cmdb-api/api/lib/cmdb/ci.py:308</small></h2><pre><span class="ctx">          unique_key = AttributeCache.get(ci_type.unique_id) or abort(</span>
+<span class="ctx">              400, ErrFormat.unique_value_not_found.format(&quot;unique_id={}&quot;.format(ci_type.unique_id)))</span>
+<span class="ctx">  </span>
+<span class="del">-         unique_value = ci_dict.get(unique_key.name)</span>
+<span class="del">-         unique_value = unique_value or ci_dict.get(unique_key.alias)</span>
+<span class="del">-         unique_value = unique_value or ci_dict.get(unique_key.id)</span>
+<span class="add">+         unique_value = ci_dict.get(unique_key.name) or ci_dict.get(unique_key.alias) or ci_dict.get(unique_key.id)</span>
+<span class="ctx">          unique_value = unique_value or abort(400, ErrFormat.unique_key_required.format(unique_key.name))</span>
+<span class="ctx">  </span>
+<span class="ctx">          attrs = CITypeAttributesCache.get2(ci_type_name)</span>
+</pre><div class="choices" data-id="H148"></div></section>
+<section id="H149"><h2>H149 <small>DedSecInside/TorBot · 8928e463b9 · modules/getweblinks.py:24</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">      pattern = r&quot;^https?:\/\/(www\.)?([a-z,A-Z,0-9]*)\.([a-z, A-Z]+)(.*)&quot;</span>
+<span class="ctx">      regex = re.compile(pattern)</span>
+<span class="del">-     if regex.match(url):</span>
+<span class="del">-         return True</span>
+<span class="del">-     return False</span>
+<span class="add">+     if not extensions:</span>
+<span class="add">+         if regex.match(url):</span>
+<span class="add">+             return True</span>
+<span class="add">+         return False</span>
+<span class="add">+ </span>
+<span class="add">+     parts = tldextract.extract(url)</span>
+<span class="add">+     valid_sites = list()</span>
+<span class="add">+     for ext in extensions:</span>
+<span class="add">+         if regex.match(url) and &#x27;.&#x27;+parts.suffix in ext:</span>
+<span class="add">+             valid_sites.append(url)</span>
+<span class="add">+     return valid_sites</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def valid_onion_url(url):</span>
+</pre><div class="choices" data-id="H149"></div></section>
+<section id="H150"><h2>H150 <small>ikalchev/HAP-python · 519f22fa72 · tests/conftest.py:55</small></h2><pre><span class="ctx">      def publish(self, data, client_addr=None, immediate=False):</span>
+<span class="ctx">          pass</span>
+<span class="ctx">  </span>
+<span class="del">-     def add_job(self, target, *args):  # pylint: disable=no-self-use</span>
+<span class="add">+     def add_job(self, target, *args):</span>
+<span class="ctx">          asyncio.new_event_loop().run_until_complete(target(*args))</span>
+</pre><div class="choices" data-id="H150"></div></section>
+<section id="H151"><h2>H151 <small>agronholm/typeguard · 38ab1249bc · src/typeguard/_transformer.py:239</small></h2><pre><span class="ctx">          if not isinstance(top_expression, Name):</span>
+<span class="ctx">              return False</span>
+<span class="ctx">  </span>
+<span class="del">-         translated = self.imported_names.get(top_expression.id, top_expression.id)</span>
+<span class="add">+         if top_expression.id in self.imported_names:</span>
+<span class="add">+             translated = self.imported_names[top_expression.id]</span>
+<span class="add">+         elif hasattr(builtins, top_expression.id):</span>
+<span class="add">+             translated = &quot;builtins.&quot; + top_expression.id</span>
+<span class="add">+         else:</span>
+<span class="add">+             translated = top_expression.id</span>
+<span class="add">+ </span>
+<span class="ctx">          path.insert(0, translated)</span>
+<span class="ctx">          joined_path = &quot;.&quot;.join(path)</span>
+<span class="ctx">          if joined_path in names:</span>
+</pre><div class="choices" data-id="H151"></div></section>
+<section id="H152"><h2>H152 <small>PyDMD/PyDMD · 6a8a83707f · pydmd/mrcosts.py:321</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">              if verbose:</span>
+<span class="ctx">                  print(&quot;_________________________________________________&quot;)</span>
+<span class="del">-                 print(&quot;Fitting window length = {}&quot;.format(window))</span>
+<span class="add">+                 print(f&quot;Fitting window length = {window:}&quot;)</span>
+<span class="ctx">              mrd.fit(x_iter, np.atleast_2d(time), window, step, verbose=verbose)</span>
+<span class="ctx">  </span>
+<span class="ctx">              # Cluster the frequency bands</span>
+</pre><div class="choices" data-id="H152"></div></section>
+<section id="H153"><h2>H153 <small>heuer/segno · c3349df9a4 · tests/test_helpers.py:12</small></h2><pre><span class="ctx">  Tests against the helper factory functions.</span>
+<span class="ctx">  Issue &lt;https://github.com/heuer/segno/issues/19&gt;</span>
+<span class="ctx">  &quot;&quot;&quot;</span>
+<span class="del">- from __future__ import unicode_literals, absolute_import</span>
+<span class="ctx">  import pytest</span>
+<span class="ctx">  import segno</span>
+<span class="ctx">  from segno import helpers</span>
+</pre><div class="choices" data-id="H153"></div></section>
+<section id="H154"><h2>H154 <small>flask-dashboard/Flask-MonitoringDashboard · cc3ca5e2d0 · flask_monitoringdashboard/config.py:88</small></h2><pre><span class="ctx">              self.colors = parse_literal(parser, &#x27;COLORS&#x27;, self.colors)</span>
+<span class="ctx">              self.outlier_detection_constant = parse_literal(parser, &#x27;OUTlIER_DETECTION_CONSTANT&#x27;,</span>
+<span class="ctx">                                                              self.outlier_detection_constant)</span>
+<span class="del">- </span>
+<span class="ctx">              self.username = parse_string(parser, &#x27;USERNAME&#x27;, self.username)</span>
+<span class="ctx">              self.password = parse_string(parser, &#x27;PASSWORD&#x27;, self.password)</span>
+<span class="ctx">              self.guest_username = parse_string(parser, &#x27;GUEST_USERNAME&#x27;, self.guest_username)</span>
+</pre><div class="choices" data-id="H154"></div></section>
+<section id="H155"><h2>H155 <small>heuer/segno · aae6e741b1 · segno/encoder.py:246</small></h2><pre><span class="ctx">      capacity = consts.SYMBOL_CAPACITY[version][error]</span>
+<span class="ctx">      # ISO/IEC 18004:2015(E) -- 7.4.9 Terminator (page 32)</span>
+<span class="ctx">      write_terminator(buff, capacity, ver, len(buff))</span>
+<span class="del">-     #  ISO/IEC 18004:2015(E) -- 7.4.10 Bit stream to codeword conversion (page 34)</span>
+<span class="add">+     # ISO/IEC 18004:2015(E) -- 7.4.10 Bit stream to codeword conversion (page 34)</span>
+<span class="ctx">      write_padding_bits(buff, version, len(buff))</span>
+<span class="ctx">      # ISO/IEC 18004:2015(E) -- 7.4.10 Bit stream to codeword conversion (page 34)</span>
+<span class="ctx">      write_pad_codewords(buff, version, capacity, len(buff))</span>
+</pre><div class="choices" data-id="H155"></div></section>
+<section id="H156"><h2>H156 <small>agronholm/typeguard · 2a3376ec72 · src/typeguard/_functions.py:78</small></h2><pre><span class="ctx">  def check_argument_types(</span>
+<span class="ctx">      func_name: str,</span>
+<span class="ctx">      arguments: dict[str, tuple[Any, Any]],</span>
+<span class="del">-     # vararg: tuple[str, tuple[object, ...], Any] | None,</span>
+<span class="del">-     # kwarg: tuple[str, dict[str, object], Any] | None,</span>
+<span class="ctx">      memo: TypeCheckMemo,</span>
+<span class="ctx">  ) -&gt; Literal[True]:</span>
+<span class="ctx">      if type_checks_suppressed:</span>
+</pre><div class="choices" data-id="H156"></div></section>
+<section id="H157"><h2>H157 <small>andikleen/pmu-tools · 0b001890b1 · toplev.py:1153</small></h2><pre><span class="ctx">          return siblings[0]</span>
+<span class="ctx">      return n</span>
+<span class="ctx">  </span>
+<span class="del">- def find_final(bn):</span>
+<span class="del">-     return _find_final(bn, 0)</span>
+<span class="add">+ def find_bn(olist, match):</span>
+<span class="add">+     bn = [o for o in olist if match(o) and o.thresh and not o.metric]</span>
+<span class="add">+     if len(bn) == 0:</span>
+<span class="add">+         return None</span>
+<span class="add">+     return _find_bn(bn, 0)</span>
+<span class="ctx">  </span>
+<span class="ctx">  pmu_does_not_exist = set()</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H157"></div></section>
+<section id="H158"><h2>H158 <small>netbox-community/netbox-docker · 3071c500da · configuration/ldap/ldap_config.py:71</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  # This search ought to return all groups to which the user belongs. django_auth_ldap uses this to determine group</span>
+<span class="ctx">  # heirarchy.</span>
+<span class="add">+ </span>
+<span class="ctx">  AUTH_LDAP_GROUP_SEARCH_BASEDN = environ.get(&#x27;AUTH_LDAP_GROUP_SEARCH_BASEDN&#x27;, &#x27;&#x27;)</span>
+<span class="ctx">  AUTH_LDAP_GROUP_SEARCH_CLASS = environ.get(&#x27;AUTH_LDAP_GROUP_SEARCH_CLASS&#x27;, &#x27;group&#x27;)</span>
+<span class="ctx">  AUTH_LDAP_GROUP_SEARCH = LDAPSearch(AUTH_LDAP_GROUP_SEARCH_BASEDN, ldap.SCOPE_SUBTREE,</span>
+</pre><div class="choices" data-id="H158"></div></section>
+<section id="H159"><h2>H159 <small>chaquo/chaquopy · 9529a12fac · product/gradle-plugin/src/main/python/pip/_internal/download.py:597</small></h2><pre><span class="ctx">      progress_indicator = _progress_indicator</span>
+<span class="ctx">  </span>
+<span class="ctx">      if link.netloc == PyPI.netloc:</span>
+<span class="del">-          url = show_url</span>
+<span class="add">+         url = show_url</span>
+<span class="ctx">      else:</span>
+<span class="ctx">          url = link.url_without_fragment</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H159"></div></section>
+<section id="H160"><h2>H160 <small>andikleen/pmu-tools · 13a061ab17 · tl_uval.py:81</small></h2><pre><span class="ctx">      def format_mux(self):</span>
+<span class="ctx">          vs = &quot;&quot;</span>
+<span class="ctx">          if self.multiplex and self.multiplex == self.multiplex:</span>
+<span class="del">-             vs = &quot;[{:6.2f}%]&quot;.format(self.multiplex)</span>
+<span class="add">+             vs = &quot;[{:3.1f}%]&quot;.format(self.multiplex)</span>
+<span class="ctx">          return vs</span>
+<span class="ctx">  </span>
+<span class="ctx">      def set_desc(self, name, comment):</span>
+</pre><div class="choices" data-id="H160"></div></section>
+<section id="H161"><h2>H161 <small>pantsbuild/pants · 547ab6a4eb · build-support/bin/generate_travis_yml.py:451</small></h2><pre><span class="ctx">          &quot;name&quot;: f&quot;Build macOS native engine and pants.pex (Python {python_version.decimal})&quot;,</span>
+<span class="ctx">          &quot;after_failure&quot;: [&quot;./build-support/bin/ci-failure.sh&quot;],</span>
+<span class="ctx">          &quot;stage&quot;: python_version.default_stage(is_bootstrap=True).value,</span>
+<span class="del">-         &quot;script&quot;: [_bootstrap_command(python_version=python_version)],</span>
+<span class="add">+         &quot;script&quot;: _bootstrap_commands(python_version=python_version),</span>
+<span class="ctx">      }</span>
+<span class="ctx">      safe_extend(shard, &quot;env&quot;, _bootstrap_env(python_version=python_version, platform=Platform.osx))</span>
+<span class="ctx">      return shard</span>
+</pre><div class="choices" data-id="H161"></div></section>
+<section id="H162"><h2>H162 <small>celery/django-celery-results · ea4067ab2b · t/unit/backends/test_database.py:264</small></h2><pre><span class="ctx">          self.b.mark_as_done(tid2, result, request=request)</span>
+<span class="ctx">          mindb = self.b.get_task_meta(tid2)</span>
+<span class="ctx">  </span>
+<span class="add">+         # check task meta</span>
+<span class="ctx">          assert mindb.get(&#x27;result&#x27;).get(&#x27;foo&#x27;) == &#x27;baz&#x27;</span>
+<span class="ctx">          assert mindb.get(&#x27;result&#x27;).get(&#x27;bar&#x27;).data == 12345</span>
+<span class="ctx">          assert mindb.get(&#x27;task_name&#x27;) == &#x27;my_task&#x27;</span>
+</pre><div class="choices" data-id="H162"></div></section>
+<section id="H163"><h2>H163 <small>kivy/python-for-android · 3a155e3c70 · testapps/testapp_pillow/main.py:345</small></h2><pre><span class="ctx">              raise_error(&quot;Could not import pyjnius&quot;)</span>
+<span class="ctx">              return</span>
+<span class="ctx">  </span>
+<span class="del">-         print(&quot;Attempting to vibrate with pyjnius&quot;)</span>
+<span class="del">-         # Todo: fix vibrate with Api level &gt;= 26</span>
+<span class="del">-         # vibrate was deprecated in API level 26:</span>
+<span class="del">-         # https://developer.android.com/reference/android/os/Vibrator</span>
+<span class="del">-         try:</span>
+<span class="del">-             PythonActivity = autoclass(&quot;org.kivy.android.PythonActivity&quot;)</span>
+<span class="del">-             activity = PythonActivity.mActivity</span>
+<span class="del">-             Intent = autoclass(&quot;android.content.Intent&quot;)</span>
+<span class="del">-             Context = autoclass(&quot;android.content.Context&quot;)</span>
+<span class="del">-             vibrator = activity.getSystemService(Context.VIBRATOR_SERVICE)</span>
+<span class="add">+         Context = autoclass(&quot;android.content.Context&quot;)</span>
+<span class="add">+         PythonActivity = autoclass(&#x27;org.kivy.android.PythonActivity&#x27;)</span>
+<span class="add">+         activity = PythonActivity.mActivity</span>
+<span class="ctx">  </span>
+<span class="ctx">              vibrator.vibrate(1000)</span>
+<span class="ctx">          except Exception as e:</span>
+</pre><div class="choices" data-id="H163"></div></section>
+<section id="H164"><h2>H164 <small>marshmallow-code/marshmallow-sqlalchemy · 692333bc21 · src/marshmallow_sqlalchemy/schema/sqlalchemy_schema.py:186</small></h2><pre><span class="ctx">                  # table = User.__table__</span>
+<span class="ctx">  </span>
+<span class="ctx">              created_at = auto_field(dump_only=True)</span>
+<span class="del">-      &quot;&quot;&quot;</span>
+<span class="add">+     &quot;&quot;&quot;</span>
+<span class="ctx">  </span>
+<span class="ctx">      OPTIONS_CLASS = SQLAlchemyAutoSchemaOpts</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H164"></div></section>
+<section id="H165"><h2>H165 <small>PyDMD/PyDMD · 7c5eb7c252 · pydmd/bopdmd.py:571</small></h2><pre><span class="ctx">                          residual, error = residual_0, error_0</span>
+<span class="ctx">                          break</span>
+<span class="ctx">  </span>
+<span class="del">-                 # Terminate if no appropriate step length was found.</span>
+<span class="add">+                 # Terminate if no appropriate step length was found...</span>
+<span class="ctx">                  if error_0 &gt;= error:</span>
+<span class="ctx">                      if verbose:</span>
+<span class="ctx">                          msg = (</span>
+</pre><div class="choices" data-id="H165"></div></section>
+<section id="H166"><h2>H166 <small>FPGAwars/apio · 8f9db08a14 · apio/util.py:399</small></h2><pre><span class="ctx">          )</span>
+<span class="ctx">  </span>
+<span class="ctx">          scons_command = [</span>
+<span class="del">-             normpath(sys.executable),</span>
+<span class="del">-             safe_join(bin_dir[&quot;scons&quot;], &quot;scons&quot;),</span>
+<span class="add">+           normpath(sys.executable),</span>
+<span class="add">+           safe_join(bin_dir[&quot;scons&quot;], &quot;scons&quot;),</span>
+<span class="ctx">          ]</span>
+<span class="ctx">  </span>
+<span class="ctx">      return check</span>
+</pre><div class="choices" data-id="H166"></div></section>
+<section id="H167"><h2>H167 <small>spesmilo/electrumx · 2b5a43eb61 · electrumx/lib/tx.py:371</small></h2><pre><span class="ctx">          base_size = self.cursor - start</span>
+<span class="ctx">          </span>
+<span class="ctx">          # https://github.com/litecoin-project/litecoin/blob/948e6257aec15b52ef68b4e1ee9d73f7c740fae3/src/primitives/transaction.h#L299</span>
+<span class="del">-         if flag &amp; 1: # witness flag</span>
+<span class="add">+         if flag &amp; 1:  # witness flag</span>
+<span class="ctx">              witness = self._read_witness(len(inputs))</span>
+<span class="ctx">          else:</span>
+<span class="ctx">              # A MW tx is allowed to not have the witness bit of the flag byte</span>
+</pre><div class="choices" data-id="H167"></div></section>
+<section id="H168"><h2>H168 <small>flask-dashboard/Flask-MonitoringDashboard · a3b9dbcec6 · flask_monitoringdashboard/main.py:89</small></h2><pre><span class="ctx">      return 33.3</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- app.run()</span>
+<span class="add">+ app.run()</span>
+</pre><div class="choices" data-id="H168"></div></section>
+<section id="H169"><h2>H169 <small>gcovr/gcovr · aa7c0a1179 · gcovr/tests/test_gcovr.py:336</small></h2><pre><span class="ctx">      assert run([&quot;make&quot;, format])</span>
+<span class="ctx">  </span>
+<span class="ctx">      reference_dir = REFERENCE_DIR</span>
+<span class="del">-     if (platform.system() == &quot;Windows&quot;) and os.path.isdir(reference_dir + &quot;-Windows&quot;):</span>
+<span class="add">+     if (platform.system() == &quot;Windows&quot;) and os.path.isdir(reference_dir + &quot;-Windows&quot;):  # pragma: no cover</span>
+<span class="ctx">          reference_dir += &quot;-Windows&quot;</span>
+<span class="ctx">  </span>
+<span class="ctx">      if generate_reference:  # pragma: no cover</span>
+</pre><div class="choices" data-id="H169"></div></section>
+<section id="H170"><h2>H170 <small>cinemagoer/cinemagoer · c4ca059b64 · imdb/parser/http/searchMovieParser.py:1</small></h2><pre><span class="del">- # Copyright 2004-2018 Davide Alberani &lt;da@erlug.linux.it&gt;</span>
+<span class="add">+ # Copyright 2004-2022 Davide Alberani &lt;da@erlug.linux.it&gt;</span>
+<span class="ctx">  #           2008-2018 H. Turgut Uyar &lt;uyar@tekir.org&gt;</span>
+<span class="ctx">  #</span>
+<span class="ctx">  # This program is free software; you can redistribute it and/or modify</span>
+</pre><div class="choices" data-id="H170"></div></section>
+<section id="H171"><h2>H171 <small>flask-dashboard/Flask-MonitoringDashboard · 63f3b8ce0c · flask_monitoringdashboard/views/api.py:6</small></h2><pre><span class="ctx">  from collections import defaultdict</span>
+<span class="ctx">  </span>
+<span class="ctx">  import numpy</span>
+<span class="del">- </span>
+<span class="ctx">  from flask import jsonify, request, json</span>
+<span class="ctx">  </span>
+<span class="ctx">  from flask_monitoringdashboard import blueprint, user_app, config</span>
+</pre><div class="choices" data-id="H171"></div></section>
+<section id="H172"><h2>H172 <small>agronholm/typeguard · df3ca82a81 · src/typeguard/__init__.py:13</small></h2><pre><span class="ctx">      &quot;TypeCheckWarning&quot;,</span>
+<span class="ctx">      &quot;TypeCheckError&quot;,</span>
+<span class="ctx">      &quot;TypeCheckMemo&quot;,</span>
+<span class="del">-     &quot;check_argument_types&quot;,</span>
+<span class="del">-     &quot;check_return_type&quot;,</span>
+<span class="ctx">      &quot;check_type&quot;,</span>
+<span class="ctx">      &quot;check_type_internal&quot;,</span>
+<span class="ctx">      &quot;check_yield_type&quot;,</span>
+</pre><div class="choices" data-id="H172"></div></section>
+<section id="H173"><h2>H173 <small>spesmilo/electrumx · 399cc81db8 · electrumx/lib/coins.py:2797</small></h2><pre><span class="ctx">      TX_COUNT = 1</span>
+<span class="ctx">      TX_COUNT_HEIGHT = 1</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  class Pivx(Coin):</span>
+<span class="ctx">      NAME = &quot;PIVX&quot;</span>
+<span class="ctx">      SHORTNAME = &quot;PIVX&quot;</span>
+</pre><div class="choices" data-id="H173"></div></section>
+<section id="H174"><h2>H174 <small>Toblerity/Fiona · 954fdc6996 · fiona/compat.py:22</small></h2><pre><span class="ctx">  # More specifically, rasterio has a CRS() class that subclasses UserDict()</span>
+<span class="ctx">  # In Python 2 UserDict() is in its own module and does not subclass Mapping()</span>
+<span class="ctx">  DICT_TYPES = (dict, collections.Mapping, UserDict)</span>
+<span class="del">-     </span>
+<span class="add">+ </span>
+</pre><div class="choices" data-id="H174"></div></section>
+<section id="H175"><h2>H175 <small>secdev/scapy · 4e83e5d2d4 · scapy/tools/UTscapy.py:883</small></h2><pre><span class="ctx">          except Exception as e:</span>
+<span class="ctx">              print(&quot;[CRITICAL]: Cannot import Scapy: %s&quot; % e, file=sys.stderr)</span>
+<span class="ctx">              traceback.print_exc()</span>
+<span class="del">-             sys.exit(1)  # Arbort the tests</span>
+<span class="add">+             sys.exit(1)  # Abort the tests</span>
+<span class="ctx">  </span>
+<span class="ctx">          for m in MODULES:</span>
+<span class="ctx">              try:</span>
+</pre><div class="choices" data-id="H175"></div></section>
+<section id="H176"><h2>H176 <small>PyDMD/PyDMD · 84a2f229a7 · tests/test_bopdmd.py:2</small></h2><pre><span class="ctx">  import numpy as np</span>
+<span class="del">- from scipy.integrate import ode</span>
+<span class="add">+ from scipy.integrate import solve_ivp</span>
+<span class="ctx">  from pytest import raises</span>
+<span class="ctx">  from pydmd.bopdmd import BOPDMD</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H176"></div></section>
+<section id="H177"><h2>H177 <small>theupdateframework/python-tuf · 61e8f40346 · tests/test_trusted_metadata_set.py:163</small></h2><pre><span class="ctx">              self.metadata[&quot;role1&quot;], &quot;role1&quot;, &quot;targets&quot;</span>
+<span class="ctx">          )</span>
+<span class="ctx">  </span>
+<span class="add">+     def test_root_with_invalid_json(self):</span>
+<span class="add">+         # Test loading initial root and root update</span>
+<span class="add">+         for test_func in [TrustedMetadataSet, self.trusted_set.update_root]:</span>
+<span class="add">+             # root is not json</span>
+<span class="add">+             with self.assertRaises(exceptions.RepositoryError):</span>
+<span class="add">+                 test_func(b&quot;&quot;)</span>
+<span class="ctx">  </span>
+<span class="ctx">      def test_update_with_invalid_json(self):</span>
+<span class="ctx">          # root.json not a json file at all</span>
+</pre><div class="choices" data-id="H177"></div></section>
+<section id="H178"><h2>H178 <small>pantsbuild/pants · 0b8fd78923 · src/python/pants/engine/isolated_process.py:97</small></h2><pre><span class="ctx">          )</span>
+<span class="ctx">          if len({req.description for req in request_dict.values()}) != 1:</span>
+<span class="ctx">              raise ValueError(</span>
+<span class="del">-                 f&quot;The `description` of all execute_process_requests in a {MultiPlatformExecuteProcessRequest.__name__} must be identical.&quot;</span>
+<span class="add">+                 f&quot;The `description` of all processes in a {MultiPlatformProcess.__name__} must be identical.&quot;</span>
+<span class="ctx">              )</span>
+<span class="ctx">  </span>
+<span class="ctx">          self.platform_constraints = validated_constraints</span>
+</pre><div class="choices" data-id="H178"></div></section>
+<section id="H179"><h2>H179 <small>veops/cmdb · bba3a2b931 · cmdb-api/api/lib/cmdb/attribute.py:14</small></h2><pre><span class="ctx">  from api.lib.cmdb.cache import CITypeCache</span>
+<span class="ctx">  from api.lib.cmdb.const import BUILTIN_KEYWORDS</span>
+<span class="ctx">  from api.lib.cmdb.const import CITypeOperateType</span>
+<span class="add">+ from api.lib.cmdb.const import CMDB_QUEUE</span>
+<span class="ctx">  from api.lib.cmdb.const import PermEnum</span>
+<span class="ctx">  from api.lib.cmdb.const import ResourceTypeEnum</span>
+<span class="ctx">  from api.lib.cmdb.const import RoleEnum</span>
+</pre><div class="choices" data-id="H179"></div></section>
+<section id="H180"><h2>H180 <small>heuer/segno · 3fc8b20f8f · tests/test_issue95_wifi.py:105</small></h2><pre><span class="ctx">          assert decode(data) == expected</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- # See &lt;https://github.com/zxing/zxing/blob/master/core/src/test/java/com/google/zxing/client/result/WifiParsedResultTestCase.java#L56&gt;</span>
+<span class="add">+ # See &lt;https://github.com/zxing/zxing/blob/master/core/src/test/java/com/google/zxing/client/result/WifiParsedResultTestCase.java#L56&gt; # noqa: E501</span>
+<span class="ctx">  @pytest.mark.parametrize(&#x27;expected, ssid, password&#x27;, ((&#x27;WIFI:T:WPA;S:TenChars;P:wow;;&#x27;,</span>
+<span class="ctx">                                                         &#x27;TenChars&#x27;, &#x27;wow&#x27;),</span>
+<span class="ctx">                                                        (&#x27;WIFI:T:WPA;S:TenChars;P:space is silent;;&#x27;,</span>
+</pre><div class="choices" data-id="H180"></div></section>
+<section id="H181"><h2>H181 <small>RLBot/RLBot · b2bc81b98c · src/main/python/rlbot/utils/class_importer.py:64</small></h2><pre><span class="ctx">      loaded_class = extract_class(loaded_module, base_class)</span>
+<span class="ctx">      return loaded_class, loaded_module</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  def load_external_module(python_file):</span>
+<span class="ctx">      &quot;&quot;&quot;</span>
+<span class="ctx">      Returns the loaded module.</span>
+</pre><div class="choices" data-id="H181"></div></section>
+<section id="H182"><h2>H182 <small>pantsbuild/pants · 0b8fd78923 · tests/python/pants_test/engine/test_isolated_process.py:86</small></h2><pre><span class="ctx">  async def cat_files_process_result_concatted(cat_exe_req: CatExecutionRequest) -&gt; Concatted:</span>
+<span class="ctx">      cat_bin = cat_exe_req.shell_cat</span>
+<span class="ctx">      cat_files_snapshot = await Get[Snapshot](PathGlobs, cat_exe_req.path_globs)</span>
+<span class="del">-     process_request = ExecuteProcessRequest(</span>
+<span class="add">+     process = Process(</span>
+<span class="ctx">          argv=cat_bin.argv_from_snapshot(cat_files_snapshot),</span>
+<span class="ctx">          input_files=cat_files_snapshot.directory_digest,</span>
+<span class="ctx">          description=&quot;cat some files&quot;,</span>
+</pre><div class="choices" data-id="H182"></div></section>
+<section id="H183"><h2>H183 <small>heuer/segno · 5b04e32f59 · tests/test_issue124_trailing_geo_dot.py:25</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  if __name__ == &#x27;__main__&#x27;:</span>
+<span class="ctx">      pytest.main([__file__])</span>
+<span class="del">- </span>
+</pre><div class="choices" data-id="H183"></div></section>
+<section id="H184"><h2>H184 <small>ikalchev/HAP-python · f372fe42e0 · pyhap/camera.py:768</small></h2><pre><span class="ctx">          :return: True if and only if starting the stream command was successful.</span>
+<span class="ctx">          :rtype: ``bool``</span>
+<span class="ctx">          &quot;&quot;&quot;</span>
+<span class="del">-         logging.debug(&#x27;[%s] Starting stream with the following parameters: %s&#x27;,</span>
+<span class="del">-                       session_info[&#x27;id&#x27;], stream_config)</span>
+<span class="add">+         logger.debug(</span>
+<span class="add">+             &#x27;[%s] Starting stream with the following parameters: %s&#x27;,</span>
+<span class="add">+             session_info[&#x27;id&#x27;],</span>
+<span class="add">+             stream_config</span>
+<span class="add">+         )</span>
+<span class="ctx">  </span>
+<span class="ctx">          cmd = self.start_stream_cmd.format(**stream_config).split()</span>
+<span class="ctx">          logging.debug(&#x27;Executing start stream command: &quot;%s&quot;&#x27;, &#x27; &#x27;.join(cmd))</span>
+</pre><div class="choices" data-id="H184"></div></section>
+<section id="H185"><h2>H185 <small>celery/django-celery-results · 2440f3da88 · t/unit/backends/test_database.py:798</small></h2><pre><span class="ctx">          assert TaskResult.objects.get(task_id=cid).status == states.FAILURE</span>
+<span class="ctx">  </span>
+<span class="ctx">      def test_on_chord_part_return_failure(self):</span>
+<span class="del">-         &quot;&quot;&quot;Test if a failure in one of the chord header tasks is properly handled</span>
+<span class="del">-         and the callback was not triggered</span>
+<span class="add">+         &quot;&quot;&quot;Test if a failure in one of the chord header tasks is properly</span>
+<span class="add">+         handled and the callback was not triggered</span>
+<span class="ctx">          &quot;&quot;&quot;</span>
+<span class="ctx">          gid = uuid()</span>
+<span class="ctx">          tid1 = uuid()</span>
+</pre><div class="choices" data-id="H185"></div></section>
+<section id="H186"><h2>H186 <small>andikleen/pmu-tools · 33d5ce791b · utilized.py:3</small></h2><pre><span class="ctx">  #!/usr/bin/python</span>
+<span class="ctx">  # extract utilized CPUs out of toplev CSV output</span>
+<span class="del">- # toplev ... -I 1000 -x, -o x.csv ...</span>
+<span class="add">+ # toplev ... -I 1000 --node +CPU_Utilization -x, -o x.csv ...</span>
+<span class="ctx">  # utilized.py &lt; x.csv</span>
+<span class="ctx">  # note it duplicates the core output</span>
+<span class="ctx">  from __future__ import print_function</span>
+</pre><div class="choices" data-id="H186"></div></section>
+<section id="H187"><h2>H187 <small>openatx/uiautomator2 · 55b5a579e1 · uiautomator2/__main__.py:287</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  if __name__ == &#x27;__main__&#x27;:</span>
+<span class="del">-     # import logzero</span>
+<span class="del">-     # logzero.loglevel(logging.INFO)</span>
+<span class="ctx">      main()</span>
+</pre><div class="choices" data-id="H187"></div></section>
+<section id="H188"><h2>H188 <small>openatx/uiautomator2 · b5e5ccddd3 · uiautomator2/__init__.py:624</small></h2><pre><span class="ctx">                  break</span>
+<span class="ctx">  </span>
+<span class="ctx">              if self._is_alive():</span>
+<span class="add">+                 # 显示悬浮窗，增加稳定性</span>
+<span class="add">+                 # 可能会带来悬浮窗对话框</span>
+<span class="add">+                 # 目前先测试一下，之后需要改版一下</span>
+<span class="add">+                 if os.getenv(&quot;TMQ&quot;):</span>
+<span class="add">+                     self.show_float_window(True)</span>
+<span class="ctx">                  return True</span>
+<span class="ctx">              time.sleep(1.0)</span>
+<span class="ctx">  </span>
+</pre><div class="choices" data-id="H188"></div></section>
+<section id="H189"><h2>H189 <small>heuer/segno · 5b04e32f59 · tests/test_utils.py:13</small></h2><pre><span class="ctx">  &quot;&quot;&quot;</span>
+<span class="ctx">  from __future__ import absolute_import, unicode_literals</span>
+<span class="ctx">  import pytest</span>
+<span class="del">- from segno import utils, consts</span>
+<span class="add">+ from segno import utils</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="ctx">  def test_get_border_qr():</span>
+</pre><div class="choices" data-id="H189"></div></section>
+<section id="H190"><h2>H190 <small>pantsbuild/pants · c4733cb9c3 · src/python/pants/engine/internals/engine_test.py:825</small></h2><pre><span class="ctx">          context = kwargs[&quot;context&quot;]</span>
+<span class="ctx">          assert isinstance(context, StreamingWorkunitContext)</span>
+<span class="ctx">  </span>
+<span class="del">-         completed_workunits = kwargs[&quot;completed_workunits&quot;]</span>
+<span class="del">-         for workunit in completed_workunits:</span>
+<span class="del">-             if &quot;artifacts&quot; in workunit and &quot;stdout_digest&quot; in workunit[&quot;artifacts&quot;]:</span>
+<span class="del">-                 digest = workunit[&quot;artifacts&quot;][&quot;stdout_digest&quot;]</span>
+<span class="del">-                 output = context.single_file_digests_to_bytes([digest])</span>
+<span class="del">-                 assert output == (b&quot;stdout output\n&quot;,)</span>
+<span class="add">+             completed_workunits = kwargs[&quot;completed_workunits&quot;]</span>
+<span class="add">+             for workunit in completed_workunits:</span>
+<span class="add">+                 if &quot;artifacts&quot; in workunit and &quot;stdout_digest&quot; in workunit[&quot;artifacts&quot;]:</span>
+<span class="add">+                     digest = workunit[&quot;artifacts&quot;][&quot;stdout_digest&quot;]</span>
+<span class="add">+                     output = context.single_file_digests_to_bytes([digest])</span>
+<span class="add">+                     assert output == (b&quot;stdout output\n&quot;,)</span>
+<span class="ctx">  </span>
+<span class="ctx">      handler = StreamingWorkunitHandler(</span>
+<span class="ctx">          scheduler,</span>
+</pre><div class="choices" data-id="H190"></div></section>
+<section id="H191"><h2>H191 <small>veops/cmdb · ccce5c830a · cmdb-api/api/lib/perm/acl/role.py:308</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">          for i in RoleRelation.get_by(parent_id=rid, to_dict=False):</span>
+<span class="ctx">              child_ids.append(i.child_id)</span>
+<span class="del">-             i.soft_delete(commit=False)</span>
+<span class="add">+             i.soft_delete()</span>
+<span class="ctx">  </span>
+<span class="ctx">          for i in RoleRelation.get_by(child_id=rid, to_dict=False):</span>
+<span class="ctx">              parent_ids.append(i.parent_id)</span>
+</pre><div class="choices" data-id="H191"></div></section>
+<section id="H192"><h2>H192 <small>ikalchev/HAP-python · 519f22fa72 · pyhap/hap_protocol.py:21</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">  logger = logging.getLogger(__name__)</span>
+<span class="ctx">  </span>
+<span class="del">- HIGH_WRITE_BUFFER_SIZE = 2 ** 19</span>
+<span class="add">+ HIGH_WRITE_BUFFER_SIZE = 2**19</span>
+<span class="ctx">  # We timeout idle connections after 90 hours as we must</span>
+<span class="ctx">  # clean up unused sockets periodically. 90 hours was choosen</span>
+<span class="ctx">  # as its the longest time we expect a user to be away from</span>
+</pre><div class="choices" data-id="H192"></div></section>
+<section id="H193"><h2>H193 <small>jupyter/docker-stacks · 30a1d17085 · base-notebook/test/test_pandoc.py:12</small></h2><pre><span class="ctx">  def test_pandoc(container):</span>
+<span class="ctx">      &quot;&quot;&quot;Pandoc shall be able to convert MD to HTML.&quot;&quot;&quot;</span>
+<span class="ctx">      c = container.run(</span>
+<span class="del">-         tty=True, command=[&quot;start.sh&quot;, &quot;bash&quot;, &quot;-c&quot;, &#x27;echo &quot;**BOLD**&quot; | pandoc&#x27;]</span>
+<span class="add">+         tty=True,</span>
+<span class="add">+         command=[&quot;start.sh&quot;, &quot;bash&quot;, &quot;-c&quot;, &#x27;echo &quot;**BOLD**&quot; | pandoc&#x27;]</span>
+<span class="ctx">      )</span>
+<span class="ctx">      c.wait(timeout=10)</span>
+<span class="ctx">      logs = c.logs(stdout=True).decode(&quot;utf-8&quot;)</span>
+</pre><div class="choices" data-id="H193"></div></section>
+<section id="H194"><h2>H194 <small>RLBot/RLBot · 433b5e74e5 · src/main/python/rlbot/setup_manager.py:721</small></h2><pre><span class="ctx">          # Or consider using %programdata%</span>
+<span class="ctx">          path = os.path.join(os.getenv(&quot;programdata&quot;), &quot;Epic\\EpicGamesLauncher\\Data\\Manifests&quot;)</span>
+<span class="ctx">  </span>
+<span class="del">-         if os.path.exists(path):</span>
+<span class="del">-             binary_data = search_for_manifest_file(path)</span>
+<span class="add">+     if os.path.isdir(path):</span>
+<span class="add">+         binary_data = search_for_manifest_file(path)</span>
+<span class="ctx">  </span>
+<span class="ctx">              if binary_data is not None:</span>
+<span class="ctx">                  binary_path = os.path.join(binary_data[&#x27;InstallLocation&#x27;], binary_data[&#x27;LaunchExecutable&#x27;])</span>
+</pre><div class="choices" data-id="H194"></div></section>
+<section id="H195"><h2>H195 <small>pantsbuild/pants · 547ab6a4eb · build-support/bin/generate_travis_yml.py:67</small></h2><pre><span class="ctx">  # Env vars</span>
+<span class="ctx">  # ----------------------------------------------------------------------</span>
+<span class="ctx">  </span>
+<span class="add">+ # NB: These are not applied to the Linux Docker image - all of those env vars must be explicitly</span>
+<span class="add">+ # exported in the image.</span>
+<span class="ctx">  GLOBAL_ENV_VARS = [</span>
+<span class="ctx">      &#x27;PANTS_CONFIG_FILES=&quot;${TRAVIS_BUILD_DIR}/pants.travis-ci.toml&quot;&#x27;,</span>
+<span class="ctx">      &quot;PANTS_DYNAMIC_UI=false&quot;,</span>
+</pre><div class="choices" data-id="H195"></div></section>
+<section id="H196"><h2>H196 <small>pytube/pytube · b8192f2427 · pytube/compat.py:6</small></h2><pre><span class="ctx">  &quot;&quot;&quot;Python 2/3 compatibility support.&quot;&quot;&quot;</span>
+<span class="ctx">  import sys</span>
+<span class="ctx">  </span>
+<span class="add">+ </span>
+<span class="ctx">  PY2 = sys.version_info[0] == 2</span>
+<span class="ctx">  PY3 = sys.version_info[0] == 3</span>
+<span class="ctx">  PY33 = sys.version_info[0:2] &gt;= (3, 3)</span>
+</pre><div class="choices" data-id="H196"></div></section>
+<section id="H197"><h2>H197 <small>flask-dashboard/Flask-MonitoringDashboard · b3704077fe · flask_monitoringdashboard/views/deployment.py:12</small></h2><pre><span class="ctx">  from flask_monitoringdashboard.database import session_scope</span>
+<span class="ctx">  </span>
+<span class="ctx">  </span>
+<span class="del">- @blueprint.route(&#x27;api/deploy_details&#x27;)</span>
+<span class="add">+ @blueprint.route(&#x27;/api/deploy_details&#x27;)</span>
+<span class="ctx">  @secure</span>
+<span class="ctx">  def deploy_details():</span>
+<span class="ctx">      &quot;&quot;&quot;</span>
+</pre><div class="choices" data-id="H197"></div></section>
+<section id="H198"><h2>H198 <small>theupdateframework/python-tuf · 67a3a7ab92 · tests/test_sig.py:390</small></h2><pre><span class="ctx">  </span>
+<span class="ctx">    def test_verify_must_not_count_duplicate_keyids_towards_threshold(self):</span>
+<span class="ctx">      # Create and sign dummy metadata twice with same key</span>
+<span class="add">+     # Note that we use the non-deterministic rsassa-pss signing scheme, so</span>
+<span class="add">+     # creating the signature twice shows that we don&#x27;t only detect duplicate</span>
+<span class="add">+     # signatures but also different signatures from the same key.</span>
+<span class="ctx">      signable = {&quot;signed&quot; : &quot;test&quot;, &quot;signatures&quot; : []}</span>
+<span class="ctx">      signed = securesystemslib.formats.encode_canonical(</span>
+<span class="ctx">          signable[&quot;signed&quot;]).encode(&quot;utf-8&quot;)</span>
+</pre><div class="choices" data-id="H198"></div></section>
+<section id="H199"><h2>H199 <small>jupyter/docker-stacks · 30a1d17085 · all-spark-notebook/test/test_spark_notebooks.py:19</small></h2><pre><span class="ctx">  )</span>
+<span class="ctx">  def test_nbconvert(container, test_file):</span>
+<span class="ctx">      &quot;&quot;&quot;Check if Spark notebooks can be executed&quot;&quot;&quot;</span>
+<span class="del">-     host_data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), &quot;data&quot;)</span>
+<span class="add">+     host_data_dir = os.path.join(THIS_DIR, &quot;data&quot;)</span>
+<span class="ctx">      cont_data_dir = &quot;/home/jovyan/data&quot;</span>
+<span class="ctx">      output_dir = &quot;/tmp&quot;</span>
+<span class="ctx">      timeout_ms = 600</span>
+</pre><div class="choices" data-id="H199"></div></section>
+<section id="H200"><h2>H200 <small>spesmilo/electrumx · 399cc81db8 · electrumx/lib/util.py:405</small></h2><pre><span class="ctx">  #     async def outer_task():</span>
+<span class="ctx">  #         async with timeout_after(0.1):</span>
+<span class="ctx">  #             await inner_task()</span>
+<span class="del">- # When the 0.1 sec timeout expires, inner_task will get cancelled by timeout_after (=internal cancellation).</span>
+<span class="add">+ # When the 0.1 sec timeout expires, inner_task will get cancelled by timeout_after</span>
+<span class="add">+ # (=internal cancellation).</span>
+<span class="ctx">  # If around the same time (in terms of event loop iterations) another coroutine</span>
+<span class="ctx">  # cancels outer_task (=external cancellation), there will be a race.</span>
+<span class="ctx">  # Both cancellations work by propagating a CancelledError out to timeout_after, which then</span>
+</pre><div class="choices" data-id="H200"></div></section>
+<script>
+const ids = ["H001", "H002", "H003", "H004", "H005", "H006", "H007", "H008", "H009", "H010", "H011", "H012", "H013", "H014", "H015", "H016", "H017", "H018", "H019", "H020", "H021", "H022", "H023", "H024", "H025", "H026", "H027", "H028", "H029", "H030", "H031", "H032", "H033", "H034", "H035", "H036", "H037", "H038", "H039", "H040", "H041", "H042", "H043", "H044", "H045", "H046", "H047", "H048", "H049", "H050", "H051", "H052", "H053", "H054", "H055", "H056", "H057", "H058", "H059", "H060", "H061", "H062", "H063", "H064", "H065", "H066", "H067", "H068", "H069", "H070", "H071", "H072", "H073", "H074", "H075", "H076", "H077", "H078", "H079", "H080", "H081", "H082", "H083", "H084", "H085", "H086", "H087", "H088", "H089", "H090", "H091", "H092", "H093", "H094", "H095", "H096", "H097", "H098", "H099", "H100", "H101", "H102", "H103", "H104", "H105", "H106", "H107", "H108", "H109", "H110", "H111", "H112", "H113", "H114", "H115", "H116", "H117", "H118", "H119", "H120", "H121", "H122", "H123", "H124", "H125", "H126", "H127", "H128", "H129", "H130", "H131", "H132", "H133", "H134", "H135", "H136", "H137", "H138", "H139", "H140", "H141", "H142", "H143", "H144", "H145", "H146", "H147", "H148", "H149", "H150", "H151", "H152", "H153", "H154", "H155", "H156", "H157", "H158", "H159", "H160", "H161", "H162", "H163", "H164", "H165", "H166", "H167", "H168", "H169", "H170", "H171", "H172", "H173", "H174", "H175", "H176", "H177", "H178", "H179", "H180", "H181", "H182", "H183", "H184", "H185", "H186", "H187", "H188", "H189", "H190", "H191", "H192", "H193", "H194", "H195", "H196", "H197", "H198", "H199", "H200"], key = "hunk-labels";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) {}
+function save() { try { localStorage.setItem(key, JSON.stringify(state)); } catch (e) {} count(); }
+function count() { document.getElementById("count").textContent = ids.filter(i => state[i] && state[i].label).length + " / " + ids.length; }
+for (const box of document.querySelectorAll(".choices")) {
+  const id = box.dataset.id, s = state[id] || (state[id] = {label: "", cosmetic: false, note: ""});
+  for (const l of ["formatting", "comment", "logic", "cannot tell"]) {
+    const lab = document.createElement("label"), r = document.createElement("input");
+    r.type = "radio"; r.name = id; r.checked = s.label === l;
+    r.onchange = () => { s.label = l; save(); };
+    lab.append(r, " " + l); box.append(lab);
+  }
+  const lab = document.createElement("label"), c = document.createElement("input");
+  c.type = "checkbox"; c.checked = s.cosmetic; c.onchange = () => { s.cosmetic = c.checked; save(); };
+  lab.append(c, " cosmetic"); box.append(lab);
+  const n = document.createElement("input"); n.type = "text"; n.placeholder = "note (optional)"; n.value = s.note;
+  n.oninput = () => { s.note = n.value; save(); }; box.append(n);
+}
+count();
+function download() {
+  const q = v => '"' + String(v).replace(/"/g, '""') + '"';
+  const rows = ["id,label,cosmetic,note"].concat(ids.map(i => [i, state[i].label, state[i].cosmetic, state[i].note].map(q).join(",")));
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([rows.join("\n") + "\n"], {type: "text/csv"}));
+  a.download = "labels.csv"; a.click();
+}
+</script></body></html>
